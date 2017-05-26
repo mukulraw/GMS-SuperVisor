@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_messaging_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context="morgantech.com.gms.MessagingList">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_header"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_img"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/guardit" />
+
+            <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                android:id="@+id/tv_header"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text=" Message"
+                android:textColor="#000000"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="16dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/wslogo" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/vw_header"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/ll_header"
+            android:background="#000000"></View>
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/ll_header"
+            android:background="@color/colorPrimary"></View>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_chat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="56dp"></android.support.v7.widget.RecyclerView>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_above="@+id/ll_footer"
+                android:background="@color/colorPrimary"></View>
+
+            <LinearLayout
+                android:id="@+id/ll_footer"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="left"
+                android:orientation="horizontal">
+
+                <!-- -->
+
+                <EditText
+                    android:id="@+id/msg_send"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:paddingLeft="16dp"
+                    android:hint="Write your response"
+                    android:focusableInTouchMode="true" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:background="@color/colorPrimary"></View>
+
+                <Button
+                    android:id="@+id/btn_send"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/msgr" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

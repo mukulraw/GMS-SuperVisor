@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">GuardIT</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_view_event">ViewEvent</string>
+    <string name="title_activity_app_setting">AppSetting</string>
+    <string name="title_activity_info_screen">InfoScreen</string>
+    <string name="textviewdata"></string>
+</resources>

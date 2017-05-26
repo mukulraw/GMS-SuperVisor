@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context="morgantech.com.gms.Login">
+
+    <LinearLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/iv_img"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/guardit" />
+
+        <morgantech.com.gms.Utils.TextViewWorkSansRegular
+            android:id="@+id/tv_header"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right|center"
+            android:layout_marginRight="5dp"
+            android:text="Powered By"
+            android:textColor="#000000"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/wslogo" />
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vw_header"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/ll_header"
+        android:background="@color/colorPrimary"></View>
+
+</RelativeLayout>

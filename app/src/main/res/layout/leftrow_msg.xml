@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/ll_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#40019EEd"
+        android:gravity="left"
+        android:layout_marginRight="16dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical">
+
+
+        <morgantech.com.gms.Utils.TextViewWorkSansRegular
+            android:id="@+id/tv_attaendence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+
+            android:paddingLeft="10dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:textSize="16dp" />
+
+        <morgantech.com.gms.Utils.TextViewWorkSansRegular
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingBottom="2dp"
+            android:textSize="12dp" />
+
+    </LinearLayout>
+</LinearLayout>

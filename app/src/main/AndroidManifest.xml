@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="morgantech.com.gms">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.GET_TASKS"></uses-permission>
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/guardit"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAL38gUX0UzgdbYWqTwv1y3RpU1aMDqtA8" />
+
+        <activity android:name="morgantech.com.gms.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.TAG_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="morgantech.com.gms.Home" />
+        <activity android:name="morgantech.com.gms.ScheduleActivity" />
+        <activity
+            android:name="morgantech.com.gms.ViewEvent"
+            android:label="@string/title_activity_view_event"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="morgantech.com.gms.MapActivity"
+            android:label="@string/title_activity_app_setting"
+            android:theme="@style/AppTheme" />
+        <activity android:name="morgantech.com.gms.ReportIncident" />
+        <activity android:name="morgantech.com.gms.Messaging" />
+        <activity android:name="morgantech.com.gms.Report_Incident_video" />
+        <activity
+            android:name="morgantech.com.gms.Login"
+            android:alwaysRetainTaskState="true"
+            android:screenOrientation="nosensor" />
+        <activity android:name="morgantech.com.gms.ScanGuard" />
+        <activity android:name="morgantech.com.gms.MessagingList" />
+        <activity
+            android:name="morgantech.com.gms.InfoScreen"
+            android:label="@string/title_activity_info_screen"
+            android:theme="@style/AppTheme" />
+        <activity android:name="morgantech.com.gms.AppSetting" />
+        <activity android:name="morgantech.com.gms.QrScan" />
+        <activity android:name="morgantech.com.gms.ImageScan" />
+        <activity android:name="morgantech.com.gms.DataNfc"></activity>
+        <activity android:name="morgantech.com.gms.MapsActivity"></activity>
+        <service android:name=".FCMs.MyFirebaseMessagingService">
+        <intent-filter>
+            <action android:name="com.google.firebase.MESSAGING_EVENT" />
+        </intent-filter>
+    </service>
+    <service android:name=".FCMs.MyFirebaseInstanceIDService">
+        <intent-filter>
+            <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+        </intent-filter>
+        </service>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.your.package.fileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+    </application>
+
+</manifest>

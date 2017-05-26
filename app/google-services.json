@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "388940309297",
+    "firebase_url": "https://guardit-73f71.firebaseio.com",
+    "project_id": "guardit-73f71",
+    "storage_bucket": "guardit-73f71.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:388940309297:android:c8edec38dbfe34ce",
+        "android_client_info": {
+          "package_name": "morgantech.com.gms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "388940309297-ru0ovivbl1f0s37m5ihf2815e1harhcg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvTtechdsIgfx6OGsRwaWQJmqHrhnt3h4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

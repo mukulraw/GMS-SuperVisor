@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="right"
+    android:gravity="right"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp">
+
+    <LinearLayout
+        android:id="@+id/ll_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="#E3E3E3"
+        android:gravity="right"
+        android:orientation="vertical">
+
+
+        <morgantech.com.gms.Utils.TextViewWorkSansRegular
+            android:id="@+id/tv_attaendence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:paddingBottom="2dp"
+            android:paddingLeft="10dp"
+
+            android:paddingRight="10dp"
+            android:paddingTop="2dp"
+            android:textSize="16dp" />
+
+        <LinearLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+        <morgantech.com.gms.Utils.TextViewWorkSansRegular
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#E3E3E3"
+            android:gravity="right"
+            android:paddingBottom="2dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="2dp"
+            android:textSize="12dp" />
+
+            <ImageView
+                android:id="@+id/iv_stat"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="10dp"/>
+
+            </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

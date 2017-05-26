@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context="morgantech.com.gms.Login">
+
+    <LinearLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/iv_img"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/guardit" />
+
+        <morgantech.com.gms.Utils.TextViewWorkSansRegular
+            android:id="@+id/tv_header"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:gravity="right|center"
+            android:text="Engineered By"
+            android:textColor="#000000"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/wslogo" />
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vw_header"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/ll_header"
+        android:background="@color/colorPrimary"></View>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/vw_header"
+        android:gravity="center">
+
+        <LinearLayout
+            android:id="@+id/ll_internet"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_bak"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:visibility="gone">
+
+            <!-- #E0DCD9-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="2dp"
+                    android:src="@drawable/team_blue" />
+
+                <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="Guard Tracking System"
+                    android:textColor="@color/textcolor"
+                    android:textSize="16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="Email Address"
+                    android:imeOptions="actionNext"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="4dp"
+                    android:text="318590"
+                    android:cursorVisible="true"
+                    android:textSelectHandle="@drawable/emptyimage"
+                    android:textCursorDrawable="@drawable/cursor_drawable"
+                    android:singleLine="true"
+                    android:textColorHint="@color/black"
+                    android:textSize="14dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:textSize="14dp">
+
+                <EditText
+                    android:id="@+id/et_pin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="Password"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:text="318590"
+                    android:paddingBottom="4dp"
+                    android:cursorVisible="true"
+                    android:textSelectHandle="@drawable/emptyimage"
+                    android:textCursorDrawable="@drawable/cursor_drawable"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="4dp"
+                    android:textColorHint="@color/black"
+                    android:textSize="14dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_sign"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="12dp"
+                android:background="#019EEd"
+                android:text="Sign In"
+                android:textColor="@color/white" />
+
+            <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                android:id="@+id/tv_forgotpass"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="6dp"
+                android:gravity="right"
+                android:paddingBottom="10dp"
+                android:paddingTop="5dp"
+
+                android:text="Forgot Password ? "
+                android:textColor="@android:color/holo_red_dark" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_offline"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_bak"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:visibility="gone">
+
+            <!-- #E0DCD9-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="2dp"
+                    android:src="@drawable/circle_red" />
+
+                <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="Guard Tracking System"
+                    android:textColor="@color/textcolor"
+                    android:textSize="16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/et_email_offline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="Email Address"
+                    android:imeOptions="actionNext"
+                    android:cursorVisible="true"
+                    android:textSelectHandle="@drawable/emptyimage"
+                    android:textCursorDrawable="@drawable/cursor_drawable"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="4dp"
+                    android:singleLine="true"
+                    android:textColorHint="@color/black"
+                    android:textSize="14dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:textSize="14dp">
+
+                <EditText
+                    android:id="@+id/et_pin_offline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="Password"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:cursorVisible="true"
+                    android:textSelectHandle="@drawable/emptyimage"
+                    android:textCursorDrawable="@drawable/cursor_drawable"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="4dp"
+                    android:textColorHint="@color/black"
+                    android:textSize="14dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_sign_offline"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="16dp"
+                android:background="#019EEd"
+                android:text="Sign In"
+                android:textColor="@color/white" />
+
+
+        </LinearLayout>
+
+        <!-- ..................Third Layout.....................-->
+
+        <LinearLayout
+            android:id="@+id/ll_banner"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_bak"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp">
+
+            <!-- #E0DCD9-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="2dp"
+                    android:src="@drawable/circle_red" />
+
+                <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="No Internet \n Connection "
+                    android:textColor="@color/textcolor"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btn_banner"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/logoutbutton"
+                android:text="Click Here to continue\nin offline mode."
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

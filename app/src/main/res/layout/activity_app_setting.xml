@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_img"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/guardit" />
+
+        <morgantech.com.gms.Utils.TextViewWorkSansRegular
+            android:id="@+id/tv_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Settings"
+            android:textColor="#000000"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/wslogo" />
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ll_header"
+        android:background="@color/colorPrimary" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="57dp"
+        android:background="#ffffff">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_ip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view"
+                android:orientation="vertical">
+
+                <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Server IP"
+                    android:textSize="18dp" />
+
+                <EditText
+                    android:id="@+id/et_ip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rect_gray_border"
+                    android:hint="Enter IP"
+
+                    android:padding="5dp" />
+
+            </LinearLayout>
+
+            <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                android:id="@+id/tv1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_ip"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Update Server When User Out Of Geo Fence"
+                android:textSize="15dp"
+                android:visibility="gone" />
+
+            <Switch
+                android:id="@+id/s1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv1"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone" />
+
+
+            <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/s1"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:text="For Location , Use "
+                android:textSize="18dp" />
+
+            <RadioGroup
+                android:id="@+id/rg1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv2">
+
+                <RadioButton
+                    android:id="@+id/gps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="20dp"
+                    android:checked="true"
+                    android:text="GPS"
+
+                    />
+
+                <RadioButton
+                    android:id="@+id/network"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:text="NETWORK"
+
+                    />
+
+                <RadioButton
+                    android:id="@+id/both"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:text="BOTH"
+
+                    />
+
+
+            </RadioGroup>
+
+            <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                android:id="@+id/tv3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rg1"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:text="For Identification , Use"
+                android:textSize="18dp" />
+
+            <RadioGroup
+                android:id="@+id/rg2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/tv3"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
+
+                <RadioButton
+                    android:id="@+id/nfc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:checked="true"
+                    android:text="NFC" />
+
+                <RadioButton
+                    android:id="@+id/face"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FACE SCAN" />
+
+                <RadioButton
+                    android:id="@+id/qrscan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="QR SCAN" />
+
+            </RadioGroup>
+
+
+            <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                android:id="@+id/tv4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rg2"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:text="Push Notification"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+            <Switch
+                android:id="@+id/s2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv4"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone" />
+
+            <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                android:id="@+id/tv5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/s2"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:text="Store Employee Details In Offline Mode"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+            <Switch
+                android:id="@+id/s3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv5"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone" />
+
+            <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                android:id="@+id/tv6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/s3"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:text="Store Schedule In Offline Mode For"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/ll_et1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv6"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/et1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    android:inputType="number"
+                    android:text="7"
+                    android:textSize="17dp" />
+
+                <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    android:inputType="number"
+                    android:text="Days"
+                    android:textSize="17dp" />
+
+
+            </LinearLayout>
+
+            <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                android:id="@+id/tv7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_et1"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:text="Maximum Image Size Limit"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:id="@+id/ll_et2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv7"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    android:inputType="number"
+                    android:text="01"
+                    android:textSize="17dp" />
+
+                <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    android:inputType="number"
+                    android:text="Mb"
+                    android:textSize="17dp" />
+
+            </LinearLayout>
+
+            <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                android:id="@+id/tv8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_et2"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:text="Maximum Audio Limit"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:id="@+id/ll_et3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv8"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    android:inputType="number"
+                    android:text="01"
+                    android:textSize="17dp" />
+
+                <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    android:inputType="number"
+                    android:text="Minutes"
+                    android:textSize="17dp" />
+
+
+            </LinearLayout>
+
+            <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                android:id="@+id/tv9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_et3"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:text="Auto Install App Updates From Server"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+            <Switch
+                android:id="@+id/s4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv9"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone" />
+
+            <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                android:id="@+id/tv10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/s4"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:text="Report Incident Format"
+                android:textSize="18dp" />
+
+            <RadioGroup
+                android:id="@+id/rg3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv10"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
+
+                <RadioButton
+                    android:id="@+id/video"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Video" />
+
+                <RadioButton
+                    android:id="@+id/picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Picture And Audio" />
+
+            </RadioGroup>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/rg3"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/submit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:text="Submit" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary"></View>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:textColor="#ffffff">
+
+            <LinearLayout
+                android:id="@+id/ll_events"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/people"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/calendar_blue" />
+
+                <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Events" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_schedule"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/events" />
+
+                <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Schedule" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_home"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/home"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/home" />
+
+                <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Home" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_settings"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/settings"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/settings" />
+
+                <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Settings" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_about"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/about"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/about" />
+
+                <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="About" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>
+
+
+
+
+
+
