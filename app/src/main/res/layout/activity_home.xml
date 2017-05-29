@@ -187,13 +187,19 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight=".25"
-                        android:background="#FCFCFC"
+                        android:id="@+id/tracker"
+                        android:background="#915858"
                         android:gravity="center">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/down" />
+                        <morgantech.com.gms.Utils.TextViewWorkSansRegular
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="ACTIVITY\nTRACKER"
+                            android:textColor="#ffffff"
+                            android:textSize="14dp" />
+
+
                     </LinearLayout>
 
                     <LinearLayout

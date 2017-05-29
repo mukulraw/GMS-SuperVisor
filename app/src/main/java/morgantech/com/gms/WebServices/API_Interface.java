@@ -7,6 +7,7 @@ import morgantech.com.gms.Pojo.HomePojo;
 import morgantech.com.gms.Pojo.ScanNFCPojo;
 import morgantech.com.gms.Pojo.ScheduleParentPojo;
 import morgantech.com.gms.Pojo.ShiftDetailPojo;
+import morgantech.com.gms.activityBean;
 import morgantech.com.gms.incidentListBean;
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -120,5 +121,8 @@ public interface API_Interface {
 
     @GET("/getincidentypeList")
     void getIncidents(Callback<incidentListBean> callback);
+
+    @GET("/viewactivityList")
+    void getActivityList(@Query("email_id") String abc, Callback<activityBean> callback);
 
 }

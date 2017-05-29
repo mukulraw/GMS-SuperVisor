@@ -81,6 +81,8 @@ public class Home extends AppCompatActivity {
     Drawable userImage, userBack;
     Bitmap scaledBitmapBk;
 
+    LinearLayout tracker;
+
     boolean isFlashOn;
     TextView tv_online, tv_name;
     Prefs prefs;
@@ -99,6 +101,8 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+
 
         c = Calendar.getInstance();
         df1 = new SimpleDateFormat("HH:mm");
@@ -329,6 +333,19 @@ public class Home extends AppCompatActivity {
                                                                         }
 
         );
+
+
+        tracker = (LinearLayout)findViewById(R.id.tracker);
+
+        tracker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this , morgantech.com.gms.Activity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
 
