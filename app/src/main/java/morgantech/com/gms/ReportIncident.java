@@ -1,6 +1,7 @@
 package morgantech.com.gms;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -570,6 +571,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
 
     //CAMERA SECTION
 
+    @SuppressLint("WrongConstant")
     private void captureImage() {
         /*fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -666,19 +668,28 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
             }
         }
 
-        if (data != null) {
-            if (requestCode == PICK_FROM_GALLERY) {
+
+        if (requestCode == PICK_FROM_GALLERY) {
+
+            if (data != null) {
+
+                Log.d("asdasd" , "1");
 
                 Uri selectedImage = data.getData();
                 //  String[] filePathColumn = {MediaStore.Images.Media.DATA};
                 String filePathColumn = getRealPathFromURI(selectedImage, this);
                 if (filePathColumn != null) {
 
+                    Log.d("asdasd" , "2");
+
                     String root = Environment.getExternalStorageDirectory()
                             .toString();
                     File myDir = new File(root + "/morgan");
                     if (myDir.exists()) {
                         myDir.delete();
+
+                        Log.d("asdasd" , "3");
+
                     }
                     Random generator = new Random();
                     int n = 10000;
@@ -687,11 +698,16 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
                     File fil = new File(myDir, image_name);
 
                     try {
+
+                        Log.d("asdasd" , "4");
+
                         File file = new File(filePathColumn);
                         ExifInterface exif = new ExifInterface(file.getPath());
                         int orientation = exif.getAttributeInt(
                                 ExifInterface.TAG_ORIENTATION,
                                 ExifInterface.ORIENTATION_NORMAL);
+
+                        Log.d("asdasd" , "5");
 
                         int angle = 0;
 
@@ -715,12 +731,17 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
                         yourSelectedImage = Bitmap.createBitmap(bmp, 0, 0,
                                 bmp.getWidth(), bmp.getHeight(), mat, true);
 
+                        Log.d("asdasd" , "6");
+
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
                         yourSelectedImage.compress(Bitmap.CompressFormat.JPEG, 75, stream);
 
                         if (yourSelectedImage != null) {
                         /*    .......................setting image in ImageView..........................*/
-                            scaledBitmapBk = ScalingUtilities
+
+                            Log.d("asdasd" , "7");
+
+                        scaledBitmapBk = ScalingUtilities
                                     .createScaledBitmap(yourSelectedImage, 900,
                                             900, ScalingUtilities.ScalingLogic.CROP);
                             userBack = new BitmapDrawable(getResources(),
@@ -730,6 +751,9 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
                             setupUI();
                             imgstat = true;
                             if (!imageurl.contains(Uri.parse(file.toString()))) {
+
+                                Log.d("asdasd" , "8");
+
                                 imageurl.add(Uri.parse(file.toString()));
 
                             }
@@ -1064,15 +1088,23 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
                 .setEndpoint(Constraints.Base_Address)
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
-        apiInterface.getReportIncedent(prefs.getPreferencesString(ReportIncident.this, "emp_code").toString(),
+        apiInterface.getReportIncedent(prefs.getPreferencesString(ReportIncident.this, "mail_id").toString(),
                 prefs.getPreferencesString(ReportIncident.this, "shift_id").toString(), type, severity, text.getText().toString().trim(), latitude, longitude, new Callback<String>() {
                     @Override
                     public void success(String buddypojo, Response response) {
 
-                        if (buddypojo.equals("0")) {
+                        //if (buddypojo.equals("0")) {
                             //Toast.makeText(ReportIncident.this, "Problem persist Contact your Asministrator!!", Toast.LENGTH_SHORT).show();
-                        } else {
+                        //} else {
                             progressDialog.dismiss();
+
+
+
+
+                            Log.d("asdasd" , buddypojo);
+
+
+
                             stat = buddypojo;
                             if (imgstat == true & audiostat) {
                                 for (int i = 0; i < imageurl.size(); i++) {
@@ -1101,7 +1133,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
                             }
 
 
-                        }
+                        //}
 
                     }
 
@@ -1248,6 +1280,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
 
                 logoutdialog.dismiss();
                 Intent in = new Intent(ReportIncident.this, MessagingList.class);
+                in.putExtra("incident_id" , stat);
                 startActivity(in);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 ReportIncident.this.finish();
@@ -1379,6 +1412,8 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void setupUI() {
+
+        Log.d("asdasd" , "9");
 
         if (drawables.size() == 0) {
             iv_counter.setText("No image selected.");

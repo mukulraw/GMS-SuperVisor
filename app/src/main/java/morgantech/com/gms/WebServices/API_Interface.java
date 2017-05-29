@@ -76,7 +76,7 @@ public interface API_Interface {
     void getMessageList(@Query("email_id") String abc, Callback<JsonArray> callback);
 
     @GET("/reportIncident")
-    void getReportIncedent(@Query("emp_id") String abc, @Query("shift_id") String shift_id, @Query("type") String type,
+    void getReportIncedent(@Query("email_id") String abc, @Query("shift_id") String shift_id, @Query("type") String type,
                            @Query("severity") String severity, @Query("remarks") String remarks,
                            @Query("latitude") double latitude, @Query("longitude") double longitude, Callback<String> callback);
 

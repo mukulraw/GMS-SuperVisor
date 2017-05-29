@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,25 +46,14 @@ public class MessageParentAdapter  extends RecyclerView.Adapter<RecyclerView.Vie
         holder.tv_msghead.setText(msgparentPojos.get(position).getSubject());
         holder.tv_time_date.setText(msgparentPojos.get(position).getDateTime());
         holder.tv_content.setText(msgparentPojos.get(position).getContent());
-        if(msgparentPojos.get(position).getLogoType().equals("Fire"))
-        {
-            holder.img.setImageResource(R.drawable.fire);
-        }
-        else if(msgparentPojos.get(position).getLogoType().equals("Maintenance"))
-        {
-            holder.img.setImageResource(R.drawable.maintenance);
-        }
-        else if(msgparentPojos.get(position).getLogoType().equals("Suspicious"))
-        {
-            holder.img.setImageResource(R.drawable.suspicious);
-        }
-       else if(msgparentPojos.get(position).getLogoType().equals("SafetyHazard"))
-        {
-            holder.img.setImageResource(R.drawable.safety);
-        }else
-        {
-            holder.img.setImageResource(R.drawable.crime);
-        }
+
+
+
+            holder.img.loadUrl("http://115.118.242.137:5000/GuardIT-RWS/rest/myresource/getincidentLogo?inci_type=" + msgparentPojos.get(position).getLogoType());
+
+
+
+
         holder.ll_parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +75,7 @@ public class MessageParentAdapter  extends RecyclerView.Adapter<RecyclerView.Vie
 
     public class DataObjectHolder extends RecyclerView.ViewHolder {
         TextView tv_msghead, tv_time_date,tv_content;
-        ImageView img;
+        WebView img;
         LinearLayout ll_parent;
 
         public DataObjectHolder(final View itemView) {
@@ -94,7 +84,7 @@ public class MessageParentAdapter  extends RecyclerView.Adapter<RecyclerView.Vie
             tv_time_date = (TextView) itemView.findViewById(R.id.tv_time_date);
             tv_content= (TextView) itemView.findViewById(R.id.tv_content);
             ll_parent=(LinearLayout)itemView.findViewById(R.id.ll_parent);
-            img=(ImageView)itemView.findViewById(R.id.img);
+            img=(WebView) itemView.findViewById(R.id.img);
 
         }
     }

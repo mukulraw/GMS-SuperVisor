@@ -109,14 +109,17 @@ public class Login extends AppCompatActivity {
 
             }
         }
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Please Wait");
+
         if (prefs.getPreferencesString(Login.this, "IP").matches("")) {
-            forgotIp("Ip");
+            //forgotIp("Ip");
+            callPingPongAPi("115.118.242.137");
         } else {
             Constraints.Base_Address = prefs.getPreferencesString(Login.this, "IP");
 
         }
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Please Wait");
 
         ((TextView) findViewById(R.id.tv_forgotpass)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -402,6 +405,7 @@ public class Login extends AppCompatActivity {
 
         if (data.equals("Ip")) {
 
+/*
             header.setText("Configure IP of Server");
             tv_frgtxt.setVisibility(View.GONE);
             emailideditext.setHint("Enter Server IP");
@@ -411,13 +415,16 @@ public class Login extends AppCompatActivity {
                     if (emailideditext.getText().toString().trim().matches("")) {
                         Toast.makeText(Login.this, "Enter Server IP", Toast.LENGTH_SHORT).show();
                     } else {
+*/
 
-
-                        callPingPongAPi(emailideditext.getText().toString().trim());
+                        //callPingPongAPi(emailideditext.getText().toString().trim());
+                        callPingPongAPi("115.118.242.137");
+/*
                     }
 
                 }
             });
+*/
 
         }
 
@@ -428,7 +435,7 @@ public class Login extends AppCompatActivity {
 
         progressDialog.show();
         RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
-                .setEndpoint("http://" + apiname + "/GuardIT-RWS/rest/myresource")
+                .setEndpoint("http://" + apiname + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         apiInterface.getPingpong(new Callback<String>() {
@@ -438,10 +445,9 @@ public class Login extends AppCompatActivity {
                 progressDialog.dismiss();
 
                 if (buddypojo.equals("555")) {
-                    Constraints.Base_Address = "http://" + emailideditext.getText().toString().trim() + "/GuardIT-RWS/rest/myresource";
-                    prefs.setPreferencesString(Login.this, "IP", "http://" + apiname + "/GuardIT-RWS/rest/myresource");
+                    Constraints.Base_Address = "http://" + apiname + ":5000/GuardIT-RWS/rest/myresource";
+                    prefs.setPreferencesString(Login.this, "IP", "http://" + apiname + ":5000/GuardIT-RWS/rest/myresource");
                     // prefs.setPreferencesString(Login.this,"IPcon", emailideditext.getText().toString().trim());
-                    ipdialog.dismiss();
                 } else {
                     Toast.makeText(Login.this, "Server IP is not Valid !!", Toast.LENGTH_SHORT).show();
                 }
