@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.GET_TASKS"></uses-permission>
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature
@@ -29,7 +29,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAL38gUX0UzgdbYWqTwv1y3RpU1aMDqtA8" />
 
-        <activity android:name="morgantech.com.gms.Splash">
+        <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,55 +41,57 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="morgantech.com.gms.Home" />
-        <activity android:name="morgantech.com.gms.ScheduleActivity" />
+        <activity android:name=".Home" />
+        <activity android:name=".ScheduleActivity" />
         <activity
-            android:name="morgantech.com.gms.ViewEvent"
+            android:name=".ViewEvent"
             android:label="@string/title_activity_view_event"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="morgantech.com.gms.MapActivity"
+            android:name=".MapActivity"
             android:label="@string/title_activity_app_setting"
             android:theme="@style/AppTheme" />
-        <activity android:name="morgantech.com.gms.ReportIncident" />
-        <activity android:name="morgantech.com.gms.Messaging" />
-        <activity android:name="morgantech.com.gms.Report_Incident_video" />
+        <activity android:name=".ReportIncident" />
+        <activity android:name=".Messaging" />
+        <activity android:name=".Report_Incident_video" />
         <activity
-            android:name="morgantech.com.gms.Login"
+            android:name=".Login"
             android:alwaysRetainTaskState="true"
             android:screenOrientation="nosensor" />
-        <activity android:name="morgantech.com.gms.ScanGuard" />
-        <activity android:name="morgantech.com.gms.MessagingList" />
+        <activity android:name=".ScanGuard" />
+        <activity android:name=".MessagingList" />
         <activity
-            android:name="morgantech.com.gms.InfoScreen"
+            android:name=".InfoScreen"
             android:label="@string/title_activity_info_screen"
             android:theme="@style/AppTheme" />
-        <activity android:name="morgantech.com.gms.AppSetting" />
-        <activity android:name="morgantech.com.gms.QrScan" />
-        <activity android:name="morgantech.com.gms.ImageScan" />
-        <activity android:name="morgantech.com.gms.DataNfc"></activity>
-        <activity android:name="morgantech.com.gms.MapsActivity"></activity>
+        <activity android:name=".AppSetting" />
+        <activity android:name=".QrScan" />
+        <activity android:name=".ImageScan" />
+        <activity android:name=".DataNfc" />
+        <activity android:name=".MapsActivity" />
+
         <service android:name=".FCMs.MyFirebaseMessagingService">
-        <intent-filter>
-            <action android:name="com.google.firebase.MESSAGING_EVENT" />
-        </intent-filter>
-    </service>
-    <service android:name=".FCMs.MyFirebaseInstanceIDService">
-        <intent-filter>
-            <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-        </intent-filter>
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".FCMs.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
         </service>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.your.package.fileProvider"
-            android:grantUriPermissions="true"
-            android:exported="false">
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <activity android:name=".Activity"></activity>
     </application>
 
 </manifest>

@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,9 +50,10 @@ public class MessageParentAdapter  extends RecyclerView.Adapter<RecyclerView.Vie
         holder.tv_content.setText(msgparentPojos.get(position).getContent());
 
 
+        ImageLoader loader = ImageLoader.getInstance();
 
-            holder.img.loadUrl("http://115.118.242.137:5000/GuardIT-RWS/rest/myresource/getincidentLogo?inci_type=" + msgparentPojos.get(position).getLogoType());
 
+        loader.displayImage("http://115.118.242.137:5000/GuardIT-RWS/rest/myresource/getincidentLogo?inci_type=" + msgparentPojos.get(position).getLogoType() , holder.img);
 
 
 
@@ -75,7 +78,7 @@ public class MessageParentAdapter  extends RecyclerView.Adapter<RecyclerView.Vie
 
     public class DataObjectHolder extends RecyclerView.ViewHolder {
         TextView tv_msghead, tv_time_date,tv_content;
-        WebView img;
+        ImageView img;
         LinearLayout ll_parent;
 
         public DataObjectHolder(final View itemView) {
@@ -84,7 +87,7 @@ public class MessageParentAdapter  extends RecyclerView.Adapter<RecyclerView.Vie
             tv_time_date = (TextView) itemView.findViewById(R.id.tv_time_date);
             tv_content= (TextView) itemView.findViewById(R.id.tv_content);
             ll_parent=(LinearLayout)itemView.findViewById(R.id.ll_parent);
-            img=(WebView) itemView.findViewById(R.id.img);
+            img=(ImageView) itemView.findViewById(R.id.img);
 
         }
     }
