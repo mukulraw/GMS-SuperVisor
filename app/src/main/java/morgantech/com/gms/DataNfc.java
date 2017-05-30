@@ -275,13 +275,13 @@ public class DataNfc extends AppCompatActivity {
                 progressDialog.dismiss();
                 try {
                     if (buddypojo.equals("0")) {
-                        Toast.makeText(DataNfc.this, "Deletion  UnSuccessFull", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DataNfc.this, "Deletion  UnSuccessFul", Toast.LENGTH_SHORT).show();
 
                     } else if (buddypojo.equals("2")) {
-                        Toast.makeText(DataNfc.this, "Delete SuccessFull", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DataNfc.this, "Delete SuccessFul", Toast.LENGTH_SHORT).show();
                         callApi();
                     } else if (buddypojo.equals("1")) {
-                        Toast.makeText(DataNfc.this, "Deletion is UnSuccessFull", Toast.LENGTH_LONG).show();
+                        Toast.makeText(DataNfc.this, "Deletion is UnSuccessFul", Toast.LENGTH_LONG).show();
                     }
 
                 } catch (Exception e) {
@@ -608,15 +608,15 @@ public class DataNfc extends AppCompatActivity {
                 progressDialog.dismiss();
                 try {
                     if (buddypojo.equals("0")) {
-                        Toast.makeText(DataNfc.this, "Registration is UnSuccessFull", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DataNfc.this, "Registration is UnSuccessFul", Toast.LENGTH_SHORT).show();
 
 
                     } else if (buddypojo.equals("1")) {
-                        Toast.makeText(DataNfc.this, "Registration SuccessFull", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DataNfc.this, "Registration SuccessFul", Toast.LENGTH_SHORT).show();
                         callApi();
 
                     } else if (buddypojo.equals("2")) {
-                        Toast.makeText(DataNfc.this, "Registration is UnSuccessFull", Toast.LENGTH_LONG).show();
+                        Toast.makeText(DataNfc.this, "Registration is UnSuccessFul", Toast.LENGTH_LONG).show();
                     }
 
                 } catch (Exception e) {

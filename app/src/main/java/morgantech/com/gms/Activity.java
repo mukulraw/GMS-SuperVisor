@@ -11,6 +11,8 @@ import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,7 +32,9 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import morgantech.com.gms.DbHelper.DbDataUpload;
 import morgantech.com.gms.DbHelper.DbHelper;
@@ -58,6 +62,11 @@ public class Activity extends AppCompatActivity {
     DbHelper dbHelper;
     Calendar c;
     Prefs prefs;
+    RecyclerView grid;
+    GridLayoutManager manager;
+    ActivityAdapter adapter;
+    List<activityBean> list;
+
     boolean flagscan = false;
     SimpleDateFormat df1;
     @Override
@@ -65,6 +74,18 @@ public class Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_);
         check_offline = (ImageView) findViewById(R.id.check_offline);
+
+        list = new ArrayList<>();
+        adapter = new ActivityAdapter(this , list);
+
+        ivProfilePic = (ImageView) findViewById(R.id.iv_profile);
+
+        grid = (RecyclerView)findViewById(R.id.recycler);
+
+        manager = new GridLayoutManager(this , 1);
+
+        grid.setAdapter(adapter);
+        grid.setLayoutManager(manager);
 
         df1 = new SimpleDateFormat("HH:mm");
         prefs = new Prefs();
@@ -132,6 +153,28 @@ public class Activity extends AppCompatActivity {
             }
 
         }
+
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(Constraints.Base_Address)
+                .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
+        API_Interface apiInterface = restAdapter.create(API_Interface.class);
+
+
+        apiInterface.getActivityList(prefs.getPreferencesString(Activity.this, "mail_id"), new Callback<List<activityBean>>() {
+            @Override
+            public void success(List<activityBean> list, Response response) {
+
+                adapter.setGridData(list);
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+
 
     }
 

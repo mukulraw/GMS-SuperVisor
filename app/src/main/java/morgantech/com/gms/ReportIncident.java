@@ -95,13 +95,13 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
     boolean flag = true;
     boolean flagpause = false;
     ProgressDialog progressDialog;
-   // Button addsignature;
+    // Button addsignature;
     private Gallery gallery;
     private ArrayList<Uri> imageurl;
     ImageView iv_del;
 
     int temp = 0;
-    int count=0;
+    int count = 0;
 
     //CAMERA SECTION
     // Activity request codes
@@ -115,7 +115,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
     boolean audiostat = false;
     String stat;
     String statmsg;
-   // boolean sign = false;
+    // boolean sign = false;
     private static final String IMAGE_DIRECTORY_NAME = "CAMERA_TESTER";
     private Uri fileUri = null; // file url to store image/video
     EditText text;
@@ -148,7 +148,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
         imageurl = new ArrayList<Uri>();
         drawables = new ArrayList<>();
         iv_counter = (TextView) findViewById(R.id.iv_counter);
-     //   addsignature = (Button) findViewById(R.id.addsignature);
+        //   addsignature = (Button) findViewById(R.id.addsignature);
         final Button location = (Button) findViewById(R.id.location);
         Button send = (Button) findViewById(R.id.send);
         prefs = new Prefs();
@@ -170,7 +170,6 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
         longitude = gps.getLongitude();
 
 
-
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(Constraints.Base_Address)
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
@@ -183,7 +182,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
 
                 state = incidentListBean.getIncidentName();
 
-                ArrayAdapter<String> adapter_state = new ArrayAdapter<String>(ReportIncident.this , android.R.layout.simple_spinner_item, state);
+                ArrayAdapter<String> adapter_state = new ArrayAdapter<String>(ReportIncident.this, android.R.layout.simple_spinner_item, state);
                 adapter_state
                         .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerOsversions.setAdapter(adapter_state);
@@ -204,15 +203,15 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
                /* if (tmp2 == 0) {
                     location.setBackgroundColor(Color.parseColor("#019EEd"));
                     tmp2 = 1;*/
-                    if (Helper.checkInternetConnection(ReportIncident.this)) {
-                        Intent intent = new Intent(ReportIncident.this, MapsActivity.class);
-                        intent.putExtra("lat", String.valueOf(gps.getLatitude()));
-                        intent.putExtra("lng", String.valueOf(gps.getLongitude()));
-                        intent.putExtra("flag", "pic");
-                        startActivityForResult(intent, 1);
-                        overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                        return;
-                    }
+                if (Helper.checkInternetConnection(ReportIncident.this)) {
+                    Intent intent = new Intent(ReportIncident.this, MapsActivity.class);
+                    intent.putExtra("lat", String.valueOf(gps.getLatitude()));
+                    intent.putExtra("lng", String.valueOf(gps.getLongitude()));
+                    intent.putExtra("flag", "pic");
+                    startActivityForResult(intent, 1);
+                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                    return;
+                }
 
 /*
                 }
@@ -224,8 +223,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
                 }*/
 
                /* if (gps.getLocation() != null) {*/
-                else
-                {
+                else {
                     latitude = gps.getLatitude();
                     longitude = gps.getLongitude();
                 }
@@ -242,23 +240,23 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
 
                 if (Helper.checkInternetConnection(ReportIncident.this)) {
 
-                        remarks = text.getText().toString().trim();
-                        if (!text.getText().toString().trim().matches("")) {
+                    remarks = text.getText().toString().trim();
+                    if (!text.getText().toString().trim().matches("")) {
 
-                            hitRoportIncidentApi();
-                        } else {
-                            Toast.makeText(ReportIncident.this, "Add Remark", Toast.LENGTH_SHORT).show();
-                        }
+                        hitRoportIncidentApi();
+                    } else {
+                        Toast.makeText(ReportIncident.this, "Add Remark", Toast.LENGTH_SHORT).show();
+                    }
 
                 } else {
 
-                        remarks = text.getText().toString().trim();
-                        if (!text.getText().toString().trim().matches("")) {
+                    remarks = text.getText().toString().trim();
+                    if (!text.getText().toString().trim().matches("")) {
 
-                            storeDb();
-                        } else {
-                            Toast.makeText(ReportIncident.this, "Add Remark", Toast.LENGTH_SHORT).show();
-                        }
+                        storeDb();
+                    } else {
+                        Toast.makeText(ReportIncident.this, "Add Remark", Toast.LENGTH_SHORT).show();
+                    }
 
 
                 }
@@ -447,7 +445,6 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
                     }
 
 
-
                 }
 
 
@@ -578,21 +575,16 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);*/
 
 
-
-
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         File photo = null;
 
-        try
-        {
+        try {
             // place where to store camera taken picture
             photo = this.createTemporaryFile("picture", ".jpg");
             photo.delete();
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             Log.v("TAG", "Can't create file to take picture!");
-            Toast.makeText(ReportIncident.this , "Please check SD card! Image shot is impossible!", 10000);
+            Toast.makeText(ReportIncident.this, "Please check SD card! Image shot is impossible!", 10000);
         }
 
 
@@ -620,12 +612,10 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
     }
 
 
-    private File createTemporaryFile(String part, String ext) throws Exception
-    {
-        File tempDir= Environment.getExternalStorageDirectory();
-        tempDir=new File(tempDir.getAbsolutePath()+"/.temp/");
-        if(!tempDir.exists())
-        {
+    private File createTemporaryFile(String part, String ext) throws Exception {
+        File tempDir = Environment.getExternalStorageDirectory();
+        tempDir = new File(tempDir.getAbsolutePath() + "/.temp/");
+        if (!tempDir.exists()) {
             tempDir.mkdirs();
         }
         return File.createTempFile(part, ext, tempDir);
@@ -673,14 +663,14 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
 
             if (data != null) {
 
-                Log.d("asdasd" , "1");
+                Log.d("asdasd", "1");
 
                 Uri selectedImage = data.getData();
                 //  String[] filePathColumn = {MediaStore.Images.Media.DATA};
                 String filePathColumn = getRealPathFromURI(selectedImage, this);
                 if (filePathColumn != null) {
 
-                    Log.d("asdasd" , "2");
+                    Log.d("asdasd", "2");
 
                     String root = Environment.getExternalStorageDirectory()
                             .toString();
@@ -688,7 +678,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
                     if (myDir.exists()) {
                         myDir.delete();
 
-                        Log.d("asdasd" , "3");
+                        Log.d("asdasd", "3");
 
                     }
                     Random generator = new Random();
@@ -699,7 +689,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
 
                     try {
 
-                        Log.d("asdasd" , "4");
+                        Log.d("asdasd", "4");
 
                         File file = new File(filePathColumn);
                         ExifInterface exif = new ExifInterface(file.getPath());
@@ -707,7 +697,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
                                 ExifInterface.TAG_ORIENTATION,
                                 ExifInterface.ORIENTATION_NORMAL);
 
-                        Log.d("asdasd" , "5");
+                        Log.d("asdasd", "5");
 
                         int angle = 0;
 
@@ -731,7 +721,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
                         yourSelectedImage = Bitmap.createBitmap(bmp, 0, 0,
                                 bmp.getWidth(), bmp.getHeight(), mat, true);
 
-                        Log.d("asdasd" , "6");
+                        Log.d("asdasd", "6");
 
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
                         yourSelectedImage.compress(Bitmap.CompressFormat.JPEG, 75, stream);
@@ -739,9 +729,9 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
                         if (yourSelectedImage != null) {
                         /*    .......................setting image in ImageView..........................*/
 
-                            Log.d("asdasd" , "7");
+                            Log.d("asdasd", "7");
 
-                        scaledBitmapBk = ScalingUtilities
+                            scaledBitmapBk = ScalingUtilities
                                     .createScaledBitmap(yourSelectedImage, 900,
                                             900, ScalingUtilities.ScalingLogic.CROP);
                             userBack = new BitmapDrawable(getResources(),
@@ -752,7 +742,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
                             imgstat = true;
                             if (!imageurl.contains(Uri.parse(file.toString()))) {
 
-                                Log.d("asdasd" , "8");
+                                Log.d("asdasd", "8");
 
                                 imageurl.add(Uri.parse(file.toString()));
 
@@ -802,8 +792,6 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
             options.inSampleSize = 8;
             final Bitmap bitmap = BitmapFactory.decodeFile(fileUri.getPath(),
                     options);
-
-
 
 
             //CONVERTING IMAGE INTO BYTE ARRAY
@@ -1094,43 +1082,39 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
                     public void success(String buddypojo, Response response) {
 
                         //if (buddypojo.equals("0")) {
-                            //Toast.makeText(ReportIncident.this, "Problem persist Contact your Asministrator!!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(ReportIncident.this, "Problem persist Contact your Asministrator!!", Toast.LENGTH_SHORT).show();
                         //} else {
-                            progressDialog.dismiss();
+                        progressDialog.dismiss();
 
 
+                        Log.d("asdasd", buddypojo);
 
 
-                            Log.d("asdasd" , buddypojo);
+                        stat = buddypojo;
+                        if (imgstat == true & audiostat) {
+                            for (int i = 0; i < imageurl.size(); i++) {
+                                hitImageApi(buddypojo, imageurl.get(i));
 
-
-
-                            stat = buddypojo;
-                            if (imgstat == true & audiostat) {
-                                for (int i = 0; i < imageurl.size(); i++) {
-                                    hitImageApi(buddypojo, imageurl.get(i));
-
-                                }
-                                hitApi(buddypojo);
-
-                                statmsg = "Audio And Image Uploaded Successfully!";
-                                return;
-                            } else if (audiostat) {
-                                hitApi(buddypojo);
-                                statmsg = "Audio Uploaded Successfully!";
-                                return;
-                            } else if (imgstat) {
-                                for (int i = 0; i < imageurl.size(); i++) {
-                                    hitImageApi(buddypojo, imageurl.get(i));
-                                    Log.e("Uploading", "Uploading");
-                                }
-                                statmsg = "Image Uploaded Successfully!";
-                                return;
-                            }else
-                            {
-                                hitEventApi("Incident\nReported");
-                                statmsg = "Incident Reported Successfully!";
                             }
+                            hitApi(buddypojo);
+
+                            statmsg = "Audio And Image Uploaded Successfully!";
+                            return;
+                        } else if (audiostat) {
+                            hitApi(buddypojo);
+                            statmsg = "Audio Uploaded Successfully!";
+                            return;
+                        } else if (imgstat) {
+                            for (int i = 0; i < imageurl.size(); i++) {
+                                hitImageApi(buddypojo, imageurl.get(i));
+                                Log.e("Uploading", "Uploading");
+                            }
+                            statmsg = "Image Uploaded Successfully!";
+                            return;
+                        } else {
+                            hitEventApi("Incident\nReported");
+                            statmsg = "Incident Reported Successfully!";
+                        }
 
 
                         //}
@@ -1149,7 +1133,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
 
         progressDialog.show();
 
-       // Log.e("Data",uri.toString() );
+        // Log.e("Data",uri.toString() );
         TypedFile typedFile = new TypedFile("multipart/form-data", new File(uri.getPath()));
         RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constraints.Base_Address).setConverter(new StringConverter())
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
@@ -1168,7 +1152,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
                                 // Toast.makeText(ReportIncident.this, "Something went wrong!! ", Toast.LENGTH_SHORT).show();
                             }
                         }
-                       // Log.e("Result", data);
+                        // Log.e("Result", data);
                     }
 
                     @Override
@@ -1185,7 +1169,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
         progressDialog.show();
 
         TypedFile typedFile = new TypedFile("multipart/form-data", new File(fileName));
-        Log.e("File",fileName.toString());
+        Log.e("File", fileName.toString());
         RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constraints.Base_Address).setConverter(new StringConverter())
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
@@ -1280,7 +1264,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
 
                 logoutdialog.dismiss();
                 Intent in = new Intent(ReportIncident.this, MessagingList.class);
-                in.putExtra("incident_id" , stat);
+                in.putExtra("incident_id", stat);
                 startActivity(in);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 ReportIncident.this.finish();
@@ -1309,7 +1293,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
                 if (prefs.getPreferencesString(ReportIncident.this, "pass").equals(tv_title.getText().toString().trim())) {
                   /*  sign = true;
 */
-                  //  addsignature.setBackgroundColor(Color.parseColor("#019EEd"));
+                    //  addsignature.setBackgroundColor(Color.parseColor("#019EEd"));
                     tmp1 = 1;
                     logoutdialog.dismiss();
 
@@ -1413,7 +1397,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
 
     private void setupUI() {
 
-        Log.d("asdasd" , "9");
+        Log.d("asdasd", "9");
 
         if (drawables.size() == 0) {
             iv_counter.setText("No image selected.");
@@ -1440,9 +1424,8 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
             if (drawables.size() > 0) {
                 gallery.setSelection(selectedImagePosition, false);
             }
-        }catch (Exception e)
-        {
-            Log.e("drawable",String.valueOf(drawables.size()));
+        } catch (Exception e) {
+            Log.e("drawable", String.valueOf(drawables.size()));
         }
     }
 
@@ -1464,11 +1447,11 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
 
                 dbHelper.insertIncident("ImageUploadReport", prefs.getPreferencesString(ReportIncident.this, "emp_code"),
                         latitude, longitude, text.getText().toString().trim(), severity, prefs.getPreferencesString(ReportIncident.this, "shift_id").toString());
-                dbHelper.insertIncident("ImageUpload", formattedDate+type, latitude, longitude, text.getText().toString().trim(), (new File(imageurl.get(i).getPath())).toString(), formattedTime);
+                dbHelper.insertIncident("ImageUpload", formattedDate + type, latitude, longitude, text.getText().toString().trim(), (new File(imageurl.get(i).getPath())).toString(), formattedTime);
             }
             dbHelper.insertIncident("AudioUploadReport", prefs.getPreferencesString(ReportIncident.this, "emp_code"),
                     latitude, longitude, text.getText().toString().trim(), severity, prefs.getPreferencesString(ReportIncident.this, "shift_id").toString());
-            dbHelper.insertIncident("AudioUpload", formattedDate+type, latitude, longitude, text.getText().toString().trim(), (new File(fileName)).toString(), formattedTime);
+            dbHelper.insertIncident("AudioUpload", formattedDate + type, latitude, longitude, text.getText().toString().trim(), (new File(fileName)).toString(), formattedTime);
 
             dbHelper.insertEvent(1, severity, text.getText().toString().trim(), formattedDate + "\n" + formattedTime, "Audio\nUpload", "Offline", String.valueOf(latitude), "app", String.valueOf(longitude));
 
@@ -1479,7 +1462,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
         } else if (audiostat) {
             dbHelper.insertIncident("AudioUploadReport", prefs.getPreferencesString(ReportIncident.this, "emp_code"),
                     latitude, longitude, text.getText().toString().trim(), severity, prefs.getPreferencesString(ReportIncident.this, "shift_id").toString());
-            dbHelper.insertIncident("AudioUpload", formattedDate+type, latitude, longitude, text.getText().toString().trim(), (new File(fileName)).toString(), formattedTime);
+            dbHelper.insertIncident("AudioUpload", formattedDate + type, latitude, longitude, text.getText().toString().trim(), (new File(fileName)).toString(), formattedTime);
 
             dbHelper.insertEvent(1, severity, text.getText().toString().trim(), formattedDate + "\n" + formattedTime, "Audio\nUpload", "Offline", String.valueOf(latitude), "app", String.valueOf(longitude));
             Toast.makeText(ReportIncident.this, "Data Saved in Database", Toast.LENGTH_SHORT).show();
@@ -1490,7 +1473,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
 
                 dbHelper.insertIncident("ImageUploadReport", prefs.getPreferencesString(ReportIncident.this, "emp_code"),
                         latitude, longitude, text.getText().toString().trim(), severity, prefs.getPreferencesString(ReportIncident.this, "shift_id").toString());
-                dbHelper.insertIncident("ImageUpload", formattedDate+type, latitude, longitude, text.getText().toString().trim(), (new File(imageurl.get(i).getPath())).toString(), formattedTime);
+                dbHelper.insertIncident("ImageUpload", formattedDate + type, latitude, longitude, text.getText().toString().trim(), (new File(imageurl.get(i).getPath())).toString(), formattedTime);
             }
             dbHelper.insertEvent(1, severity, text.getText().toString().trim(), formattedDate + "\n" + formattedTime, "Image\nUpload", "Offline", String.valueOf(latitude), "app", String.valueOf(longitude));
             Toast.makeText(ReportIncident.this, "Data Saved in Database", Toast.LENGTH_SHORT).show();

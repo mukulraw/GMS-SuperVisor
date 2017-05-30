@@ -3,6 +3,8 @@ package morgantech.com.gms.WebServices;
 import com.google.gson.JsonArray;
 import com.squareup.okhttp.Call;
 
+import java.util.List;
+
 import morgantech.com.gms.Pojo.HomePojo;
 import morgantech.com.gms.Pojo.ScanNFCPojo;
 import morgantech.com.gms.Pojo.ScheduleParentPojo;
@@ -123,6 +125,10 @@ public interface API_Interface {
     void getIncidents(Callback<incidentListBean> callback);
 
     @GET("/viewactivityList")
-    void getActivityList(@Query("email_id") String abc, Callback<activityBean> callback);
+    void getActivityList(@Query("email_id") String abc, Callback<List<activityBean>> callback);
+
+    @GET("/validateactivity")
+    void validate(@Query("activity_id") String actiId, @Query("validate_code") String calidateCode, @Query("latitude") String lat,
+                           @Query("longitude") String lng , Callback<Integer> callback);
 
 }

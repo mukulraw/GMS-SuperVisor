@@ -115,7 +115,7 @@ public class Login extends AppCompatActivity {
 
         if (prefs.getPreferencesString(Login.this, "IP").matches("")) {
             //forgotIp("Ip");
-            callPingPongAPi("115.118.242.137");
+            callPingPongAPi("91.74.108.154");
         } else {
             Constraints.Base_Address = prefs.getPreferencesString(Login.this, "IP");
 
@@ -236,7 +236,7 @@ public class Login extends AppCompatActivity {
                         } else if (buddypojo.equals("2")) {
                             Toast.makeText(Login.this, "Email Id or Password is not Valid !!", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(Login.this, "User Doesn't exist", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, "Invalid Password", Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -315,7 +315,8 @@ public class Login extends AppCompatActivity {
                 .setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface d, int id) {
-                                activity.startActivity(new Intent(action));
+                                //activity.startActivity(new Intent(action));
+                                startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                                 d.dismiss();
                             }
                         })
@@ -418,7 +419,7 @@ public class Login extends AppCompatActivity {
 */
 
                         //callPingPongAPi(emailideditext.getText().toString().trim());
-                        callPingPongAPi("115.118.242.137");
+                        callPingPongAPi("91.74.108.154");
 /*
                     }
 

@@ -109,8 +109,14 @@ public class Messaging extends AppCompatActivity {
             }
         });
 
-        getEventList();
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getEventList();
     }
 
     private void getEventList() {

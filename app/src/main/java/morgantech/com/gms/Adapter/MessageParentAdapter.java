@@ -20,9 +20,6 @@ import morgantech.com.gms.MessagingList;
 import morgantech.com.gms.Pojo.MessageParentPojo;
 import morgantech.com.gms.R;
 
-/**
- * Created by Administrator on 17-01-2017.
- */
 
 public class MessageParentAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

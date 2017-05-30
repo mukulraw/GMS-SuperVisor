@@ -589,7 +589,7 @@ public class Report_Incident_video extends AppCompatActivity implements OnItemSe
                 .setEndpoint(Constraints.Base_Address)
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.NONE).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
-        apiInterface.getReportIncedent(prefs.getPreferencesString(Report_Incident_video.this, "emp_code").toString(),
+        apiInterface.getReportIncedent(prefs.getPreferencesString(Report_Incident_video.this, "mail_id").toString(),
                 prefs.getPreferencesString(Report_Incident_video.this, "shift_id").toString(), type, severity, text.getText().toString().trim(), latitude, longitude, new Callback<String>() {
                     @Override
                     public void success(String buddypojo, Response response) {

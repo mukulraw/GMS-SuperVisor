@@ -299,7 +299,7 @@ public class Home extends AppCompatActivity {
                                                                             @Override
                                                                             public void onClick(View v) {
 
-                                                                                try {
+                                                                                /*try {
                                                                                     camera = Camera.open();
                                                                                     p = camera.getParameters();
                                                                                 } catch (Exception e) {
@@ -328,14 +328,20 @@ public class Home extends AppCompatActivity {
                                                                                         turnOnFlash();
                                                                                     }
 
-                                                                                }
+                                                                                }*/
+
+
+
+                                                                                Intent intent = new Intent(Home.this , morgantech.com.gms.Activity.class);
+                                                                                startActivity(intent);
+
                                                                             }
                                                                         }
 
         );
 
 
-        tracker = (LinearLayout)findViewById(R.id.tracker);
+        /*tracker = (LinearLayout)findViewById(R.id.tracker);
 
         tracker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -343,7 +349,7 @@ public class Home extends AppCompatActivity {
                 Intent intent = new Intent(Home.this , morgantech.com.gms.Activity.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
 
     }

@@ -91,7 +91,9 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".Activity"></activity>
+        <activity android:name=".Activity" />
+        <activity android:name=".Qr2" />
+        <activity android:name=".Scan2"></activity>
     </application>
 
 </manifest>

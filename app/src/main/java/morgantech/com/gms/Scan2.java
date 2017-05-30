@@ -13,11 +13,11 @@ import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.MifareUltralight;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -58,8 +58,8 @@ import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
 
+public class Scan2 extends AppCompatActivity {
 
-public class ScanGuard extends AppCompatActivity {
     private LinearLayout ll_inflate, ll_lower, ll_user;
     private NfcAdapter mAdapter;
     private PendingIntent mPendingIntent;
@@ -77,11 +77,11 @@ public class ScanGuard extends AppCompatActivity {
     Calendar c;
     HorizontalScrollView horiz;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan_guard);
+        setContentView(R.layout.activity_scan2);
+
         prefs = new Prefs();
         c = Calendar.getInstance();
 
@@ -101,7 +101,7 @@ public class ScanGuard extends AppCompatActivity {
         ((ImageView) findViewById(R.id.iv_img)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ScanGuard.this, Home.class));
+                startActivity(new Intent(Scan2.this, Home.class));
                 overridePendingTransition(R.anim.left_in, R.anim.right_out);
                 finish();
             }
@@ -130,7 +130,7 @@ public class ScanGuard extends AppCompatActivity {
         ((LinearLayout) findViewById(R.id.ll_schedule)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ScanGuard.this, ScheduleActivity.class));
+                startActivity(new Intent(Scan2.this, ScheduleActivity.class));
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 finish();
             }
@@ -139,7 +139,7 @@ public class ScanGuard extends AppCompatActivity {
         ((LinearLayout) findViewById(R.id.ll_home)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ScanGuard.this, Home.class));
+                startActivity(new Intent(Scan2.this, Home.class));
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 finish();
             }
@@ -149,7 +149,7 @@ public class ScanGuard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(ScanGuard.this, ViewEvent.class));
+                startActivity(new Intent(Scan2.this, ViewEvent.class));
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 finish();
             }
@@ -159,7 +159,7 @@ public class ScanGuard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(ScanGuard.this, AppSetting.class));
+                startActivity(new Intent(Scan2.this, AppSetting.class));
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 finish();
             }
@@ -169,7 +169,7 @@ public class ScanGuard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(ScanGuard.this, InfoScreen.class));
+                startActivity(new Intent(Scan2.this, InfoScreen.class));
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 finish();
             }
@@ -199,6 +199,7 @@ public class ScanGuard extends AppCompatActivity {
 
             }
         });
+
     }
 
     private void showMessage(String title, String message) {
@@ -466,21 +467,21 @@ public class ScanGuard extends AppCompatActivity {
 
         // String apiname,String file, double lat, double lang, String emp_code, String formattedDate, String formattedTime
 
-        dbHelper.insertIncident("NFCScan", serial_no, lat, lang, prefs.getPreferencesString(ScanGuard.this, "shift_id").toString(), formattedDate + prefs.getPreferencesString(ScanGuard.this, "emp_code").toString(), formattedTime);
+        dbHelper.insertIncident("NFCScan", serial_no, lat, lang, prefs.getPreferencesString(Scan2.this, "shift_id").toString(), formattedDate + prefs.getPreferencesString(Scan2.this, "emp_code").toString(), formattedTime);
 
         dbHelper.insertEvent(1, "Severe", "NFC\nScan", formattedDate + "\n" + formattedTime, "NFC\nScan", "Offline", String.valueOf(lat), "app", String.valueOf(lang));
 
         dbHelper.getAllEventdata();
 
-        Toast.makeText(ScanGuard.this, "Data Saved in Database", Toast.LENGTH_SHORT).show();
-        ScanGuard.this.finish();
+        Toast.makeText(Scan2.this, "Data Saved in Database", Toast.LENGTH_SHORT).show();
+        Scan2.this.finish();
 
     }
 
 
     private void hitApi(String serial_no) {
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(" http://91.74.108.154:5000/GuardIT-RWS/rest/myresource/")
+                .setEndpoint(Constraints.Base_Address)
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         iv_profimg.setVisibility(View.INVISIBLE);
@@ -502,16 +503,16 @@ public class ScanGuard extends AppCompatActivity {
         lang = locationFinder.getLongitude();
 
 
-        apiInterface.getNFCScan(serial_no, formattedDate, formattedTime, String.valueOf(lat), String.valueOf(lang), prefs.getPreferencesString(ScanGuard.this, "shift_id").toString(), new Callback<ScanNFCPojo>() {
+        apiInterface.getNFCScan(serial_no, formattedDate, formattedTime, String.valueOf(lat), String.valueOf(lang), prefs.getPreferencesString(Scan2.this, "shift_id").toString(), new Callback<ScanNFCPojo>() {
             @Override
             public void success(ScanNFCPojo buddypojo, Response response) {
                 progressDialog.dismiss();
                 try {
                     flagscan = false;
                     horiz.setVisibility(View.INVISIBLE);
-                    if (!prefs.getPreferencesString(ScanGuard.this, "shift_id").equals(buddypojo.getShiftId())) {
+                    if (!prefs.getPreferencesString(Scan2.this, "shift_id").equals(buddypojo.getShiftId())) {
                         ll_lower.setVisibility(View.VISIBLE);
-                        Toast.makeText(ScanGuard.this, " Scheduled Resource", Toast.LENGTH_SHORT);
+                        Toast.makeText(Scan2.this, " Scheduled Resource", Toast.LENGTH_SHORT);
                         ((ImageView) findViewById(R.id.iv_stat)).setImageResource(R.drawable.circle_red);
                         new DownloadMusicfromInternet().execute(Constraints.Base_Address + "/profilepic?emp_id=" + buddypojo.getEmp_id());
                         ll_lower.setVisibility(View.VISIBLE);
@@ -540,7 +541,7 @@ public class ScanGuard extends AppCompatActivity {
                             ll_inflate.removeAllViews();
 
                             for (int i = 0; i < buddypojo.getTodayAttendance().size(); i++) {
-                                LinearLayout layoutInflater = (LinearLayout) ScanGuard.this.getLayoutInflater().inflate(R.layout.rowinflater, null);
+                                LinearLayout layoutInflater = (LinearLayout) Scan2.this.getLayoutInflater().inflate(R.layout.rowinflater, null);
                                 ((TextView) layoutInflater.findViewById(R.id.tv_attaendence)).setText(buddypojo.getTodayAttendance().get(i));
                                 ll_inflate.addView(layoutInflater);
                                 tv_scan.setText("SCAN SUCCESSFULL");
@@ -557,19 +558,40 @@ public class ScanGuard extends AppCompatActivity {
                     iv_profimg.setVisibility(View.VISIBLE);
                     horiz.setVisibility(View.GONE);
                     ll_inflate.removeAllViews();
-                    Toast.makeText(ScanGuard.this, "Not Scheduled Resource", Toast.LENGTH_SHORT);
+                    Toast.makeText(Scan2.this, "Not Scheduled Resource", Toast.LENGTH_SHORT);
                     textView2.setText("TAG not Validated \n Unknown Person");
                     ((ImageView) findViewById(R.id.iv_stat)).setImageResource(R.drawable.circle_red);
                     iv_profimg.setImageResource(R.drawable.unauthorised);
                     ll_user.setVisibility(View.GONE);
                 }
 
+
+                RestAdapter restAdapter = new RestAdapter.Builder()
+                        .setEndpoint(Constraints.Base_Address)
+                        .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
+                API_Interface apiInterface = restAdapter.create(API_Interface.class);
+
+                apiInterface.validate(getIntent().getStringExtra("data") , "", String.valueOf(lat), String.valueOf(lang), new Callback<Integer>() {
+                    @Override
+                    public void success(Integer integer, Response response) {
+
+                        finish();
+
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
+
+
             }
 
             @Override
             public void failure(RetrofitError error) {
                 progressDialog.dismiss();
-                Toast.makeText(ScanGuard.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Scan2.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -584,13 +606,13 @@ public class ScanGuard extends AppCompatActivity {
         String formattedDate = df.format(c.getTime());
         String formattedTime = df1.format(c.getTime());
         Prefs prefs = new Prefs();
-        prefs.setPreferencesString(ScanGuard.this, "login", "App");
+        prefs.setPreferencesString(Scan2.this, "login", "App");
 
         RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
                 .setEndpoint(Constraints.Base_Address)
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
-        apiInterface.getReportEvent(prefs.getPreferencesString(ScanGuard.this, "emp_code").toString(),
+        apiInterface.getReportEvent(prefs.getPreferencesString(Scan2.this, "emp_code").toString(),
                 formattedDate, formattedTime, "NFC Scan", "Scan Success", "high", "open", "app",
                 String.valueOf(lat), String.valueOf(lang), new Callback<String>() {
                     @Override
@@ -603,7 +625,7 @@ public class ScanGuard extends AppCompatActivity {
                             //   Toast.makeText(ScanGuard.this, "Event Generated", Toast.LENGTH_SHORT).show();
 
                         } else {
-                            Toast.makeText(ScanGuard.this, "Event Not Generated", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Scan2.this, "Event Not Generated", Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -611,7 +633,7 @@ public class ScanGuard extends AppCompatActivity {
                     @Override
                     public void failure(RetrofitError error) {
                         progressDialog.dismiss();
-                        Toast.makeText(ScanGuard.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Scan2.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -672,7 +694,7 @@ public class ScanGuard extends AppCompatActivity {
         File myDir = new File("file:///" + root + "/morgan");
         Uri myUri1 = Uri.parse(myDir + "/imageg.png");
         Log.e("Photo", myUri1.toString());
-        Picasso.with(ScanGuard.this).
+        Picasso.with(Scan2.this).
                 load(myUri1)//.
               /*  placeholder(R.drawable.profile_pic) // optional
                 .error(R.drawable.profile_pic)*/
@@ -687,4 +709,5 @@ public class ScanGuard extends AppCompatActivity {
         overridePendingTransition(R.anim.left_in, R.anim.right_out);
 
     }
+
 }

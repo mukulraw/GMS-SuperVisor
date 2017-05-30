@@ -7,10 +7,10 @@ public class activityBean {
 
     @SerializedName("activity_id")
     @Expose
-    private Integer activityId;
+    private String activityId;
     @SerializedName("seq_no")
     @Expose
-    private Integer seqNo;
+    private String seqNo;
     @SerializedName("activity_name")
     @Expose
     private String activityName;
@@ -27,19 +27,19 @@ public class activityBean {
     @Expose
     private Integer status;
 
-    public Integer getActivityId() {
+    public String getActivityId() {
         return activityId;
     }
 
-    public void setActivityId(Integer activityId) {
+    public void setActivityId(String activityId) {
         this.activityId = activityId;
     }
 
-    public Integer getSeqNo() {
+    public String getSeqNo() {
         return seqNo;
     }
 
-    public void setSeqNo(Integer seqNo) {
+    public void setSeqNo(String seqNo) {
         this.seqNo = seqNo;
     }
 

@@ -455,7 +455,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:text="Submit" />
+                    android:text="Save" />
 
             </LinearLayout>
         </LinearLayout>
