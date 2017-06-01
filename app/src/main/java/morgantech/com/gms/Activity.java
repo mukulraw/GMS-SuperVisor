@@ -270,7 +270,7 @@ public class Activity extends AppCompatActivity {
                 tv_name.setText("Hi\n" + buddypojo.getFirst() + " " + buddypojo.getLast());
                 prefs.setPreferencesString(Activity.this, "namedata", buddypojo.getFirst() + " " + buddypojo.getLast());
                 dbHelper.employee_tab(buddypojo.getFirst(), buddypojo.getLast(), buddypojo.getEmpCode(), prefs.getPreferencesString(Activity.this, "mail_id"));
-                new DownloadMusicfromInternet().execute("http://115.118.242.137:5000/GuardIT-RWS/rest/myresource/profilepic?emp_id=" + buddypojo.getEmpCode());
+                new DownloadMusicfromInternet().execute(Constraints.Base_Address + "/profilepic?emp_id=" + buddypojo.getEmpCode());
                 callShiftDetailApi(buddypojo.getShiftId());
 
                 prefs.setPreferencesString(Activity.this, "role", buddypojo.getRole());

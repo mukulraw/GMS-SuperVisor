@@ -798,7 +798,7 @@ public class Home extends AppCompatActivity {
                 tv_name.setText("Hi\n" + buddypojo.getFirst() + " " + buddypojo.getLast());
                 prefs.setPreferencesString(Home.this, "namedata", buddypojo.getFirst() + " " + buddypojo.getLast());
                 dbHelper.employee_tab(buddypojo.getFirst(), buddypojo.getLast(), buddypojo.getEmpCode(), prefs.getPreferencesString(Home.this, "mail_id"));
-                new DownloadMusicfromInternet().execute("http://115.118.242.137:5000/GuardIT-RWS/rest/myresource/profilepic?emp_id=" + buddypojo.getEmpCode());
+                new DownloadMusicfromInternet().execute(Constraints.Base_Address + "/profilepic?emp_id=" + buddypojo.getEmpCode());
                 callShiftDetailApi(buddypojo.getShiftId());
 
                 prefs.setPreferencesString(Home.this, "role", buddypojo.getRole());
