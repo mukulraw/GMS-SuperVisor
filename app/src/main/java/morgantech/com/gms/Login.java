@@ -116,6 +116,7 @@ public class Login extends AppCompatActivity {
         if (prefs.getPreferencesString(Login.this, "IP").matches("")) {
             //forgotIp("Ip");
             callPingPongAPi("91.74.108.154");
+            //callPingPongAPi("115.118.242.137");
         } else {
             Constraints.Base_Address = prefs.getPreferencesString(Login.this, "IP");
 
@@ -211,7 +212,7 @@ public class Login extends AppCompatActivity {
 
         progressDialog.show();
         RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         apiInterface.getLogin(et_email_offline.getText().toString().trim(), et_pin.getText().toString().trim(),
@@ -254,7 +255,7 @@ public class Login extends AppCompatActivity {
 
         progressDialog.show();
         RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
-                .setEndpoint(Constraints.Base_Address)//+"&mobile_id="+ FirebaseInstanceId.getInstance().getToken())
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")//+"&mobile_id="+ FirebaseInstanceId.getInstance().getToken())
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         apiInterface.getLogin(et_email.getText().toString().trim(), et_pin.getText().toString().trim(), FirebaseInstanceId.getInstance().getToken(), new Callback<String>() {
@@ -358,8 +359,8 @@ public class Login extends AppCompatActivity {
                     if (emailideditext.getText().toString().trim().matches("")) {
                         Toast.makeText(Login.this, "Enter Server IP", Toast.LENGTH_SHORT).show();
                     } else {
-                        Constraints.Base_Address = "http://" + emailideditext.getText().toString().trim() + "/GuardIT-RWS/rest/myresource";
-                        prefs.setPreferencesString(Login.this, "IP", "http://" + emailideditext.getText().toString().trim() + "/GuardIT-RWS/rest/myresource");
+                        Constraints.Base_Address = emailideditext.getText().toString().trim();
+                        prefs.setPreferencesString(Login.this, "IP", emailideditext.getText().toString().trim());
                         // prefs.setPreferencesString(Login.this,"IPcon", emailideditext.getText().toString().trim());
                         logoutdialog.dismiss();
                     }
@@ -420,6 +421,8 @@ public class Login extends AppCompatActivity {
 
                         //callPingPongAPi(emailideditext.getText().toString().trim());
                         callPingPongAPi("91.74.108.154");
+                        //callPingPongAPi("115.118.242.137");
+
 /*
                     }
 
@@ -446,8 +449,9 @@ public class Login extends AppCompatActivity {
                 progressDialog.dismiss();
 
                 if (buddypojo.equals("555")) {
-                    Constraints.Base_Address = "http://" + apiname + ":5000/GuardIT-RWS/rest/myresource";
-                    prefs.setPreferencesString(Login.this, "IP", "http://" + apiname + ":5000/GuardIT-RWS/rest/myresource");
+                    //Constraints.Base_Address = "http://" + apiname + ":5000/GuardIT-RWS/rest/myresource";
+                    Constraints.Base_Address = apiname;
+                    prefs.setPreferencesString(Login.this, "IP", apiname);
                     // prefs.setPreferencesString(Login.this,"IPcon", emailideditext.getText().toString().trim());
                 } else {
                     Toast.makeText(Login.this, "Server IP is not Valid !!", Toast.LENGTH_SHORT).show();
@@ -468,7 +472,7 @@ public class Login extends AppCompatActivity {
 
         progressDialog.show();
         RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         apiInterface.getPassword(trim, new Callback<String>() {

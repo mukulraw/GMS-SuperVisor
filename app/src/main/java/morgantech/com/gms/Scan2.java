@@ -481,7 +481,7 @@ public class Scan2 extends AppCompatActivity {
 
     private void hitApi(String serial_no) {
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         iv_profimg.setVisibility(View.INVISIBLE);
@@ -514,7 +514,7 @@ public class Scan2 extends AppCompatActivity {
                         ll_lower.setVisibility(View.VISIBLE);
                         Toast.makeText(Scan2.this, " Scheduled Resource", Toast.LENGTH_SHORT);
                         ((ImageView) findViewById(R.id.iv_stat)).setImageResource(R.drawable.circle_red);
-                        new DownloadMusicfromInternet().execute(Constraints.Base_Address + "/profilepic?emp_id=" + buddypojo.getEmp_id());
+                        new DownloadMusicfromInternet().execute("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmp_id());
                         ll_lower.setVisibility(View.VISIBLE);
                         textView2.setText("TAG Validated\nUnscheduled Resource");
                         tv_scan.setText("NOT SCHEDULED FOR DUTY");
@@ -535,7 +535,7 @@ public class Scan2 extends AppCompatActivity {
                         tv_empcode.setText(buddypojo.getEmpCode());
                         hitEventApi();
                         ((ImageView) findViewById(R.id.iv_stat)).setImageResource(R.drawable.circle_green);
-                        new DownloadMusicfromInternet().execute("http://91.74.108.154:5000/GuardIT-RWS/rest/myresource/profilepic?emp_id=" + buddypojo.getEmp_id());
+                        new DownloadMusicfromInternet().execute("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource/profilepic?emp_id=" + buddypojo.getEmp_id());
                         if (!buddypojo.getTodayAttendance().isEmpty()) {
 
                             ll_inflate.removeAllViews();
@@ -567,7 +567,7 @@ public class Scan2 extends AppCompatActivity {
 
 
                 RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint(Constraints.Base_Address)
+                        .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                         .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
                 API_Interface apiInterface = restAdapter.create(API_Interface.class);
 
@@ -609,7 +609,7 @@ public class Scan2 extends AppCompatActivity {
         prefs.setPreferencesString(Scan2.this, "login", "App");
 
         RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         apiInterface.getReportEvent(prefs.getPreferencesString(Scan2.this, "emp_code").toString(),

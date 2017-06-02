@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,10 +77,10 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         holder.activity.setText(item.getLocation());
         holder.type.setText(item.getValidationType());
 
-        if (item.getStatus() == 0)
+        if (item.getStatus() == 1)
         {
             holder.check.setBackground(context.getResources().getDrawable(R.drawable.check_red));
-        }else if (item.getStatus() == 1)
+        }else if (item.getStatus() == 0)
         {
             holder.check.setBackground(context.getResources().getDrawable(R.drawable.check_green));
         }
@@ -109,20 +110,29 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             @Override
             public void onClick(View v) {
 
-                if (item.getValidationType() == "QR Code")
+                Log.d("click" , "Clicked");
+
+                if (item.getValidationType().trim().equals("QR Code"))
                 {
+                    Log.d("click" , "QR Code");
+
+
                     Intent intent = new Intent(context , Qr2.class);
                     intent.putExtra("data" , item.getActivityId());
                     context.startActivity(intent);
                 }
-                else if (item.getValidationType() == "NFC")
+                else if (item.getValidationType().trim().equals("NFC"))
                 {
+                    Log.d("click" , "NFC");
+
                     Intent intent = new Intent(context , Scan2.class);
                     intent.putExtra("data" , item.getActivityId());
                     context.startActivity(intent);
                 }
-                else if (item.getValidationType() == "Check")
+                else if (item.getValidationType().trim().equals("Check"))
                 {
+
+                    Log.d("click" , "Check");
 
                     final Dialog dialog = new Dialog(context);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -151,7 +161,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
 
                             RestAdapter restAdapter = new RestAdapter.Builder()
-                                    .setEndpoint(Constraints.Base_Address)
+                                    .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                                     .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
                             API_Interface apiInterface = restAdapter.create(API_Interface.class);
 

@@ -257,7 +257,7 @@ public class DataNfc extends AppCompatActivity {
 
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         progressDialog.setTitle("Registering NFC !");
@@ -541,7 +541,7 @@ public class DataNfc extends AppCompatActivity {
     private void callApi() {
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
 
@@ -590,7 +590,7 @@ public class DataNfc extends AppCompatActivity {
     private void hitApi() {
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
 

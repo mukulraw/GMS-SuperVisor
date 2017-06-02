@@ -52,7 +52,6 @@ import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 
-
 public class Activity extends AppCompatActivity {
 
 
@@ -156,7 +155,7 @@ public class Activity extends AppCompatActivity {
 
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
 
@@ -176,13 +175,66 @@ public class Activity extends AppCompatActivity {
         });
 
 
+
+
+        ((LinearLayout) findViewById(R.id.ll_events)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(Activity.this, ViewEvent.class));
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                finish();
+            }
+        });
+
+
+        ((LinearLayout) findViewById(R.id.ll_schedule)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Activity.this, ScheduleActivity.class));
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                finish();
+            }
+        });
+
+        ((LinearLayout) findViewById(R.id.ll_home)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Activity.this, Home.class));
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                finish();
+            }
+        });
+
+        ((LinearLayout) findViewById(R.id.ll_settings)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(Activity.this, AppSetting.class));
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                finish();
+            }
+        });
+
+        ((LinearLayout) findViewById(R.id.ll_about)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(Activity.this, InfoScreen.class));
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                finish();
+            }
+        });
+
+
+
     }
 
 
     private void callShiftDetailApi(String shiftId) {
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
 
@@ -252,7 +304,7 @@ public class Activity extends AppCompatActivity {
 
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
 
@@ -270,7 +322,7 @@ public class Activity extends AppCompatActivity {
                 tv_name.setText("Hi\n" + buddypojo.getFirst() + " " + buddypojo.getLast());
                 prefs.setPreferencesString(Activity.this, "namedata", buddypojo.getFirst() + " " + buddypojo.getLast());
                 dbHelper.employee_tab(buddypojo.getFirst(), buddypojo.getLast(), buddypojo.getEmpCode(), prefs.getPreferencesString(Activity.this, "mail_id"));
-                new DownloadMusicfromInternet().execute(Constraints.Base_Address + "/profilepic?emp_id=" + buddypojo.getEmpCode());
+                new DownloadMusicfromInternet().execute("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpCode());
                 callShiftDetailApi(buddypojo.getShiftId());
 
                 prefs.setPreferencesString(Activity.this, "role", buddypojo.getRole());
@@ -313,7 +365,7 @@ public class Activity extends AppCompatActivity {
         //  Log.e("Lat", String.valueOf(lat) + String.valueOf(lang));
 
         RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         apiInterface.getReportEvent(prefs.getPreferencesString(Activity.this, "emp_code").toString(),
@@ -351,6 +403,9 @@ public class Activity extends AppCompatActivity {
                 URL url = new URL(audioUrl[0]);
                 URLConnection conection = url.openConnection();
                 conection.connect();
+
+                Log.d("asdasd" , audioUrl[0]);
+
                 int lenghtOfFile = conection.getContentLength();
                 // input stream to read file - with 8k buffer
                 InputStream input = new BufferedInputStream(url.openStream(), 10 * 1024);
@@ -398,8 +453,12 @@ public class Activity extends AppCompatActivity {
             File myDir = new File("file:///" + root + "/morgan");
             Uri myUri1 = Uri.parse(myDir + "/image.png");
             Log.e("Photo", myUri1.toString());
+
+
+
             Picasso.with(Activity.this).
                     load(myUri1)//.
+
               /*  placeholder(R.drawable.profile_pic) // optional
                 .error(R.drawable.profile_pic)*/
                     .memoryPolicy(MemoryPolicy.NO_CACHE)

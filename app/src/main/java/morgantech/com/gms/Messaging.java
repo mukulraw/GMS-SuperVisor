@@ -122,7 +122,7 @@ public class Messaging extends AppCompatActivity {
     private void getEventList() {
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         Prefs prefs = new Prefs();

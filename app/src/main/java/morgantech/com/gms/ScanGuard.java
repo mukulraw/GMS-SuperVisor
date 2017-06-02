@@ -480,7 +480,7 @@ public class ScanGuard extends AppCompatActivity {
 
     private void hitApi(String serial_no) {
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(" http://91.74.108.154:5000/GuardIT-RWS/rest/myresource/")
+                .setEndpoint(" http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource/")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         iv_profimg.setVisibility(View.INVISIBLE);
@@ -513,7 +513,7 @@ public class ScanGuard extends AppCompatActivity {
                         ll_lower.setVisibility(View.VISIBLE);
                         Toast.makeText(ScanGuard.this, " Scheduled Resource", Toast.LENGTH_SHORT);
                         ((ImageView) findViewById(R.id.iv_stat)).setImageResource(R.drawable.circle_red);
-                        new DownloadMusicfromInternet().execute(Constraints.Base_Address + "/profilepic?emp_id=" + buddypojo.getEmp_id());
+                        new DownloadMusicfromInternet().execute("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmp_id());
                         ll_lower.setVisibility(View.VISIBLE);
                         textView2.setText("TAG Validated\nUnscheduled Resource");
                         tv_scan.setText("NOT SCHEDULED FOR DUTY");
@@ -534,7 +534,7 @@ public class ScanGuard extends AppCompatActivity {
                         tv_empcode.setText(buddypojo.getEmpCode());
                         hitEventApi();
                         ((ImageView) findViewById(R.id.iv_stat)).setImageResource(R.drawable.circle_green);
-                        new DownloadMusicfromInternet().execute("http://91.74.108.154:5000/GuardIT-RWS/rest/myresource/profilepic?emp_id=" + buddypojo.getEmp_id());
+                        new DownloadMusicfromInternet().execute("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource/profilepic?emp_id=" + buddypojo.getEmp_id());
                         if (!buddypojo.getTodayAttendance().isEmpty()) {
 
                             ll_inflate.removeAllViews();
@@ -587,7 +587,7 @@ public class ScanGuard extends AppCompatActivity {
         prefs.setPreferencesString(ScanGuard.this, "login", "App");
 
         RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         apiInterface.getReportEvent(prefs.getPreferencesString(ScanGuard.this, "emp_code").toString(),

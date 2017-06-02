@@ -586,7 +586,7 @@ public class Report_Incident_video extends AppCompatActivity implements OnItemSe
         }
 
         RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.NONE).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         apiInterface.getReportIncedent(prefs.getPreferencesString(Report_Incident_video.this, "mail_id").toString(),
@@ -615,7 +615,7 @@ public class Report_Incident_video extends AppCompatActivity implements OnItemSe
     private void hitImageApi(String id) {
 
         TypedFile typedFile = new TypedFile("multipart/form-data", new File(fileUri.getPath()));
-        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constraints.Base_Address).setConverter(new StringConverter())
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource").setConverter(new StringConverter())
                 .setClient(new OkClient(new OkHttpClient())).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         apiInterface.uploadImage(id, fileUri.getLastPathSegment(), typedFile, "mp4", text.getText().toString().trim(),
@@ -660,7 +660,7 @@ public class Report_Incident_video extends AppCompatActivity implements OnItemSe
 
 
         RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         apiInterface.getReportEvent(prefs.getPreferencesString(Report_Incident_video.this, "emp_code").toString(),

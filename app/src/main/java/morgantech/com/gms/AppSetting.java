@@ -37,11 +37,8 @@ public class AppSetting extends AppCompatActivity {
         prefs = new Prefs();
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        et_ip.setText(prefs.getPreferencesString(this, "IP").substring(7, 27).toString());
-        if (!et_ip.getText().toString().trim().matches("")) {
-            Constraints.Base_Address = "http://" + et_ip.getText().toString().trim() + "/GuardIT-RWS/rest/myresource";
-            prefs.setPreferencesString(AppSetting.this, "IP", "http://" + et_ip.getText().toString().trim() + "/GuardIT-RWS/rest/myresource");
-        }
+        et_ip.setText(prefs.getPreferencesString(this, "IP"));
+
 
         Button submit = (Button) findViewById(R.id.submit);
 
@@ -185,6 +182,11 @@ public class AppSetting extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (!et_ip.getText().toString().trim().matches("")) {
+                    Constraints.Base_Address = et_ip.getText().toString().trim();
+                    //prefs.setPreferencesString(AppSetting.this, "IP", et_ip.getText().toString().trim());
+                }
 
                 //video picture
                 int status = rg3.getCheckedRadioButtonId();

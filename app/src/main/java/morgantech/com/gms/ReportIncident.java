@@ -171,7 +171,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
 
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
 
@@ -1073,7 +1073,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
         }
 
         RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         apiInterface.getReportIncedent(prefs.getPreferencesString(ReportIncident.this, "mail_id").toString(),
@@ -1135,7 +1135,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
 
         // Log.e("Data",uri.toString() );
         TypedFile typedFile = new TypedFile("multipart/form-data", new File(uri.getPath()));
-        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constraints.Base_Address).setConverter(new StringConverter())
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource").setConverter(new StringConverter())
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         apiInterface.uploadImage(id, uri.getLastPathSegment(), typedFile, "jpg", text.getText().toString().trim(),
@@ -1170,7 +1170,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
 
         TypedFile typedFile = new TypedFile("multipart/form-data", new File(fileName));
         Log.e("File", fileName.toString());
-        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constraints.Base_Address).setConverter(new StringConverter())
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource").setConverter(new StringConverter())
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         apiInterface.uploadImage(id, (new File(fileName)).getName(), typedFile, ".ogg", text.getText().toString().trim(),
@@ -1218,7 +1218,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
         }
 
         RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
-                .setEndpoint(Constraints.Base_Address)
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
         apiInterface.getReportEvent(prefs.getPreferencesString(ReportIncident.this, "emp_code").toString(),
