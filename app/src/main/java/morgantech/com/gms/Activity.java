@@ -1,6 +1,7 @@
 package morgantech.com.gms;
 
 import android.*;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,8 +14,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,6 +39,7 @@ import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import morgantech.com.gms.DbHelper.DbDataUpload;
@@ -61,10 +67,17 @@ public class Activity extends AppCompatActivity {
     DbHelper dbHelper;
     Calendar c;
     Prefs prefs;
+    LinearLayout date;
     RecyclerView grid;
     GridLayoutManager manager;
     ActivityAdapter adapter;
     List<activityBean> list;
+
+    List<String> mont;
+
+    TextView tvDate , tvMonth;
+
+    String dd = "";
 
     boolean flagscan = false;
     SimpleDateFormat df1;
@@ -74,8 +87,30 @@ public class Activity extends AppCompatActivity {
         setContentView(R.layout.activity_);
         check_offline = (ImageView) findViewById(R.id.check_offline);
 
+        tvDate = (TextView)findViewById(R.id.tv_date);
+        tvMonth = (TextView)findViewById(R.id.tv_month);
+
+        mont = new ArrayList<>();
+
+        mont.add("January");
+        mont.add("February");
+        mont.add("March");
+        mont.add("April");
+        mont.add("May");
+        mont.add("June");
+        mont.add("July");
+        mont.add("August");
+        mont.add("September");
+        mont.add("October");
+        mont.add("November");
+        mont.add("December");
+
         list = new ArrayList<>();
         adapter = new ActivityAdapter(this , list);
+
+        date = (LinearLayout)findViewById(R.id.date);
+
+
 
         ivProfilePic = (ImageView) findViewById(R.id.iv_profile);
 
@@ -83,8 +118,24 @@ public class Activity extends AppCompatActivity {
 
         manager = new GridLayoutManager(this , 1);
 
+        dd = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
         grid.setAdapter(adapter);
         grid.setLayoutManager(manager);
+
+
+        Calendar cal = Calendar.getInstance();
+
+        int dayofyear = cal.get(Calendar.DAY_OF_YEAR);
+        int year = cal.get(Calendar.YEAR);
+        int dayofweek = cal.get(Calendar.DAY_OF_WEEK);
+        int dayofmonth = cal.get(Calendar.DAY_OF_MONTH);
+
+        tvDate.setText(String.valueOf(dayofmonth));
+        tvMonth.setText(mont.get(dayofweek));
+
+
+
 
         df1 = new SimpleDateFormat("HH:mm");
         prefs = new Prefs();
@@ -160,7 +211,7 @@ public class Activity extends AppCompatActivity {
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
 
 
-        apiInterface.getActivityList(prefs.getPreferencesString(Activity.this, "mail_id"), new Callback<List<activityBean>>() {
+        apiInterface.getActivityList(prefs.getPreferencesString(Activity.this, "mail_id") , dd , new Callback<List<activityBean>>() {
             @Override
             public void success(List<activityBean> list, Response response) {
 
@@ -173,6 +224,87 @@ public class Activity extends AppCompatActivity {
 
             }
         });
+
+
+
+
+
+
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final Dialog dialog = new Dialog(Activity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(true);
+                dialog.setContentView(R.layout.date_filter);
+                dialog.show();
+
+                final DatePicker dp = (DatePicker)dialog.findViewById(R.id.date_picker);
+                Button submit = (Button)dialog.findViewById(R.id.submit);
+
+                submit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        int da = dp.getDayOfMonth();
+                        int month = dp.getMonth() + 1;
+
+                        tvDate.setText(String.valueOf(dp.getDayOfMonth()));
+                        tvMonth.setText(mont.get(dp.getMonth()));
+
+                        String d = "", m = "";
+
+                        if (da < 10)
+                        {
+                            d = "0" + String.valueOf(da);
+                        }
+                        else
+                        {
+                            d = String.valueOf(da);
+                        }
+                        if (month < 10)
+                        {
+                            m = "0" + String.valueOf(month);
+                        }
+                        else
+                        {
+                            m = String.valueOf(month);
+                        }
+
+                        //getLocations(String.valueOf(dp.getYear()) + "-" + m + "-" + d);
+
+
+                        RestAdapter restAdapter = new RestAdapter.Builder()
+                                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
+                                .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
+                        API_Interface apiInterface = restAdapter.create(API_Interface.class);
+
+
+                        apiInterface.getActivityList(prefs.getPreferencesString(Activity.this, "mail_id") , String.valueOf(dp.getYear()) + "-" + m + "-" + d , new Callback<List<activityBean>>() {
+                            @Override
+                            public void success(List<activityBean> list, Response response) {
+
+                                adapter.setGridData(list);
+
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+
+                            }
+                        });
+
+
+                        dialog.dismiss();
+
+                    }
+                });
+
+            }
+        });
+
+
 
 
 

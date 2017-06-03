@@ -89,6 +89,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight=".25"
+            android:id="@+id/date"
             android:orientation="vertical">
 
             <morgantech.com.gms.Utils.TextViewWorkSansRegular

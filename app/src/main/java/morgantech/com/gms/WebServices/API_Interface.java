@@ -125,7 +125,7 @@ public interface API_Interface {
     void getIncidents(Callback<incidentListBean> callback);
 
     @GET("/viewactivityList")
-    void getActivityList(@Query("email_id") String abc, Callback<List<activityBean>> callback);
+    void getActivityList(@Query("email_id") String abc , @Query("date") String date , Callback<List<activityBean>> callback);
 
     @GET("/validateactivity")
     void validate(@Query("activity_id") String actiId, @Query("validate_code") String calidateCode, @Query("latitude") String lat,
