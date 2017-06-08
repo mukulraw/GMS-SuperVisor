@@ -147,7 +147,9 @@ public class ViewEvent extends AppCompatActivity {
             Uri myUri1 = Uri.parse(myDir + "/image.png");
             Log.e("Photo", myUri1.toString());
             Picasso.with(ViewEvent.this).
-                    load(myUri1)
+                    load(myUri1).
+                    placeholder(R.drawable.avatar) // optional
+                    .error(R.drawable.avatar)
                     .memoryPolicy(MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE)
                     .into(iv_profile);

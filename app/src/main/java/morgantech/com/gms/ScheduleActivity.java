@@ -113,9 +113,9 @@ public class ScheduleActivity extends AppCompatActivity {
             Uri myUri1 = Uri.parse(myDir + "/image.png");
             Log.e("Photo", myUri1.toString());
             Picasso.with(ScheduleActivity.this).
-                    load(myUri1)//.
-              /*  placeholder(R.drawable.profile_pic) // optional
-                .error(R.drawable.profile_pic)*/
+                    load(myUri1).
+                placeholder(R.drawable.avatar) // optional
+                .error(R.drawable.avatar)
                     .memoryPolicy(MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE)
                     .into(((ImageView) findViewById(R.id.iv_profile)));

@@ -82,7 +82,13 @@ public class MessagingList extends AppCompatActivity {
         hideSoftKeyboard();
 
         Intent in2 = getIntent();
-        incedent_id = Integer.parseInt(in2.getStringExtra("incident_id"));
+        try {
+            incedent_id = Integer.parseInt(in2.getStringExtra("incident_id"));
+        }catch (NumberFormatException e)
+        {
+            e.printStackTrace();
+        }
+
         sub = in2.getStringExtra("subject");
         tv_header.setText(sub);
         prefs.setPreferencesString(MessagingList.this, "incident_id", String.valueOf(incedent_id));
