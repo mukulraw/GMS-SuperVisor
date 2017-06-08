@@ -584,7 +584,7 @@ public class ReportIncident extends AppCompatActivity implements AdapterView.OnI
             photo.delete();
         } catch (Exception e) {
             Log.v("TAG", "Can't create file to take picture!");
-            Toast.makeText(ReportIncident.this, "Please check SD card! Image shot is impossible!", 10000);
+            Toast.makeText(ReportIncident.this, "Please check SD card! Image shot is impossible!", Toast.LENGTH_SHORT).show();
         }
 
 

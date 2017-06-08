@@ -73,7 +73,7 @@
                 android:id="@+id/rv_chat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="56dp"></android.support.v7.widget.RecyclerView>
+                android:layout_marginBottom="56dp"/>
 
 
             <View

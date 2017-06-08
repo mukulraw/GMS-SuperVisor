@@ -12,6 +12,12 @@ import java.util.List;
 
 public class HomePojo {
 
+    @SerializedName("emp_id")
+    @Expose
+    private String empId;
+    @SerializedName("login_id")
+    @Expose
+    private String loginId;
     @SerializedName("first")
     @Expose
     private String first;
@@ -24,15 +30,31 @@ public class HomePojo {
     @SerializedName("sex")
     @Expose
     private String sex;
-    @SerializedName("emp_id")
+    @SerializedName("emp_code")
     @Expose
-    private String emp_id;
+    private String empCode;
     @SerializedName("shift_id")
     @Expose
-    private String shift_id;
+    private String shiftId;
     @SerializedName("today_attendance")
     @Expose
-    private List<Object> today_attendance = new ArrayList<>();
+    private List<Object> todayAttendance = null;
+
+    public String getEmpId() {
+        return empId;
+    }
+
+    public void setEmpId(String empId) {
+        this.empId = empId;
+    }
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
 
     public String getFirst() {
         return first;
@@ -67,27 +89,27 @@ public class HomePojo {
     }
 
     public String getEmpCode() {
-        return emp_id;
+        return empCode;
     }
 
     public void setEmpCode(String empCode) {
-        this.emp_id = empCode;
+        this.empCode = empCode;
     }
 
     public String getShiftId() {
-        return shift_id;
+        return shiftId;
     }
 
     public void setShiftId(String shiftId) {
-        this.shift_id = shiftId;
+        this.shiftId = shiftId;
     }
 
     public List<Object> getTodayAttendance() {
-        return today_attendance;
+        return todayAttendance;
     }
 
     public void setTodayAttendance(List<Object> todayAttendance) {
-        this.today_attendance = todayAttendance;
+        this.todayAttendance = todayAttendance;
     }
 
 }

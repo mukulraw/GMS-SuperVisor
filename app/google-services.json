@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "388940309297-f5n72oj8n6rjmgd3i3km67ddkog9npot.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "morgantech.com.gms",
+            "certificate_hash": "77779d23e3f94b62b776763a997c454632e37305"
+          }
+        },
+        {
           "client_id": "388940309297-ru0ovivbl1f0s37m5ihf2815e1harhcg.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "388940309297-ru0ovivbl1f0s37m5ihf2815e1harhcg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

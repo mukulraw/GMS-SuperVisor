@@ -1,10 +1,13 @@
 package morgantech.com.gms;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,6 +20,7 @@ import com.squareup.okhttp.OkHttpClient;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import morgantech.com.gms.DbHelper.DbHelper;
 import morgantech.com.gms.Utils.Constraints;
@@ -230,7 +234,74 @@ public class Qr2 extends AppCompatActivity {
                             @Override
                             public void success(Integer integer, Response response) {
 
-                                finish();
+                                if (integer == 0)
+                                {
+                                    finish();
+                                }
+                                else if (integer == -99999)
+                                {
+
+                                    Dialog dialog1 = new Dialog(Qr2.this);
+                                    dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                    dialog1.setCancelable(true);
+                                    dialog1.setContentView(R.layout.location_dialog);
+                                    dialog1.show();
+
+                                    dialog1.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss(DialogInterface dialog) {
+
+                                            finish();
+
+                                        }
+                                    });
+
+
+                                }
+                                else if (integer>0)
+                                {
+                                    Dialog dialog1 = new Dialog(Qr2.this);
+                                    dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                    dialog1.setCancelable(true);
+                                    dialog1.setContentView(R.layout.done_dialog);
+                                    dialog1.show();
+
+                                    TextView text = (TextView)dialog1.findViewById(R.id.text);
+
+                                    text.setText("Incorrect Sequence : Missed Activity " + String.valueOf(integer));
+
+
+                                    dialog1.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss(DialogInterface dialog) {
+
+                                            finish();
+
+                                        }
+                                    });
+
+                                }else if (integer<0 && integer > -99999)
+                                {
+                                    Dialog dialog1 = new Dialog(Qr2.this);
+                                    dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                    dialog1.setCancelable(true);
+                                    dialog1.setContentView(R.layout.not_done_dialog);
+                                    dialog1.show();
+
+                                    TextView text = (TextView)dialog1.findViewById(R.id.text);
+
+                                    text.setText("Incorrect Sequence : Missed Activity " + String.valueOf(integer));
+
+                                    dialog1.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss(DialogInterface dialog) {
+
+                                            finish();
+
+                                        }
+                                    });
+
+                                }
 
                             }
 

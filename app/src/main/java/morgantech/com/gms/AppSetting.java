@@ -37,7 +37,7 @@ public class AppSetting extends AppCompatActivity {
         prefs = new Prefs();
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        et_ip.setText(prefs.getPreferencesString(this, "IP"));
+        et_ip.setText(Constraints.Base_Address);
 
 
         Button submit = (Button) findViewById(R.id.submit);
@@ -183,10 +183,7 @@ public class AppSetting extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (!et_ip.getText().toString().trim().matches("")) {
-                    Constraints.Base_Address = et_ip.getText().toString().trim();
-                    //prefs.setPreferencesString(AppSetting.this, "IP", et_ip.getText().toString().trim());
-                }
+
 
                 //video picture
                 int status = rg3.getCheckedRadioButtonId();
@@ -209,11 +206,24 @@ public class AppSetting extends AppCompatActivity {
                     prefs.setPreferencesString(AppSetting.this, "scan", "nfc");
                 }
 
-                Toast.makeText(AppSetting.this, "Settings Updated", Toast.LENGTH_SHORT).show();
-                Intent in = new Intent(AppSetting.this, Home.class);
-                in.putExtra("vidpic", vidPicStatus);
-                startActivity(in);
-                overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                if (!et_ip.getText().toString().trim().matches("")) {
+                    Constraints.Base_Address = et_ip.getText().toString().trim();
+                    //prefs.setPreferencesString(AppSetting.this, "IP", et_ip.getText().toString().trim());
+
+                    Toast.makeText(AppSetting.this, "Settings Updated", Toast.LENGTH_SHORT).show();
+                    Intent in = new Intent(AppSetting.this, Home.class);
+                    in.putExtra("vidpic", vidPicStatus);
+                    startActivity(in);
+                    overridePendingTransition(R.anim.left_in, R.anim.right_out);
+
+                }
+                else {
+
+                    Toast.makeText(AppSetting.this, "Invalid IP", Toast.LENGTH_SHORT).show();
+
+                }
+
+
             }
         });
 

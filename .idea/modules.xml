@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/GMS-SuperVisor.iml" filepath="$PROJECT_DIR$/GMS-SuperVisor.iml" />
       <module fileurl="file://$PROJECT_DIR$/SupervisorApp.iml" filepath="$PROJECT_DIR$/SupervisorApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

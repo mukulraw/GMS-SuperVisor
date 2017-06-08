@@ -4,12 +4,16 @@
     android:id="@+id/ll_parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:layout_marginTop="5dp"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    android:background="#ffffff"
+    android:padding="10dp"
+    android:minWidth="300dp"
     android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/add_bubble"
+        >
 
     <ImageView
         android:id="@+id/img"
@@ -55,4 +59,7 @@
             android:text="hii"
             android:textSize="12dp" />
     </LinearLayout>
+
+    </LinearLayout>
+
 </LinearLayout>

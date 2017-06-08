@@ -3,6 +3,7 @@ package morgantech.com.gms;
 import android.*;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -16,10 +17,13 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import morgantech.com.gms.DbHelper.DbDataUpload;
 import morgantech.com.gms.DbHelper.DbHelper;
@@ -48,6 +53,7 @@ import morgantech.com.gms.Pojo.HomePojo;
 import morgantech.com.gms.Pojo.ShiftDetailPojo;
 import morgantech.com.gms.Utils.Constraints;
 import morgantech.com.gms.Utils.Helper;
+import morgantech.com.gms.Utils.LocationFinder;
 import morgantech.com.gms.Utils.Prefs;
 import morgantech.com.gms.WebServices.API_Interface;
 import morgantech.com.gms.WebServices.StringConverter;
@@ -131,6 +137,8 @@ public class Activity extends AppCompatActivity {
         int dayofweek = cal.get(Calendar.DAY_OF_WEEK);
         int dayofmonth = cal.get(Calendar.DAY_OF_MONTH);
 
+
+
         tvDate.setText(String.valueOf(dayofmonth));
         tvMonth.setText(mont.get(dayofweek));
 
@@ -205,25 +213,7 @@ public class Activity extends AppCompatActivity {
         }
 
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
-                .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
-        API_Interface apiInterface = restAdapter.create(API_Interface.class);
 
-
-        apiInterface.getActivityList(prefs.getPreferencesString(Activity.this, "mail_id") , dd , new Callback<List<activityBean>>() {
-            @Override
-            public void success(List<activityBean> list, Response response) {
-
-                adapter.setGridData(list);
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
 
 
 
@@ -274,6 +264,7 @@ public class Activity extends AppCompatActivity {
 
                         //getLocations(String.valueOf(dp.getYear()) + "-" + m + "-" + d);
 
+                        dd =  String.valueOf(dp.getYear()) + "-" + m + "-" + d;
 
                         RestAdapter restAdapter = new RestAdapter.Builder()
                                 .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
@@ -362,6 +353,32 @@ public class Activity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
+                .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
+        API_Interface apiInterface = restAdapter.create(API_Interface.class);
+
+
+        apiInterface.getActivityList(prefs.getPreferencesString(Activity.this, "mail_id") , dd , new Callback<List<activityBean>>() {
+            @Override
+            public void success(List<activityBean> list, Response response) {
+
+                adapter.setGridData(list);
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+
+    }
 
     private void callShiftDetailApi(String shiftId) {
 
@@ -589,15 +606,293 @@ public class Activity extends AppCompatActivity {
 
 
             Picasso.with(Activity.this).
-                    load(myUri1)//.
+                    load(myUri1).
 
-              /*  placeholder(R.drawable.profile_pic) // optional
-                .error(R.drawable.profile_pic)*/
+                placeholder(R.drawable.avatar) // optional
+                .error(R.drawable.avatar)
                     .memoryPolicy(MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE)
                     .into(ivProfilePic);
         }
 
     }
+
+
+
+    public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder>{
+
+        private Context context;
+        LocationFinder locationFinder;
+        double lat = 0.00;
+        double lang = 0.000;
+        Prefs prefs;
+        Calendar c;
+        List<activityBean> list = new ArrayList<>();
+
+        ActivityAdapter(Context context, List<activityBean> list)
+        {
+            this.context = context;
+            this.list = list;
+        }
+
+        void setGridData(List<activityBean> list)
+        {
+            this.list = list;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.activity_list_model , parent , false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            final activityBean item = list.get(position);
+            c = Calendar.getInstance();
+            locationFinder = new LocationFinder(context);
+
+            lat = locationFinder.getLatitude();
+            lang = locationFinder.getLongitude();
+
+            prefs = new Prefs();
+            prefs.setPreferencesString(context, "login", "App");
+
+            holder.sno.setText(item.getSeqNo());
+            holder.activity.setText(item.getLocation());
+            holder.type.setText(item.getValidationType());
+
+            if (item.getStatus() == 1)
+            {
+                holder.check.setBackground(context.getResources().getDrawable(R.drawable.check_red));
+            }else if (item.getStatus() == 0)
+            {
+                holder.check.setBackground(context.getResources().getDrawable(R.drawable.check_green));
+            }
+
+            holder.info.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    Dialog dialog = new Dialog(context);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setCancelable(true);
+                    dialog.setContentView(R.layout.info_dialog);
+
+                    TextView name = (TextView)dialog.findViewById(R.id.location);
+                    TextView desc = (TextView)dialog.findViewById(R.id.desc);
+
+                    name.setText(item.getActivityName());
+                    desc.setText(item.getActivityDesc());
+
+                    dialog.show();
+
+                }
+            });
+
+            holder.check.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Log.d("click" , new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "  " + dd);
+
+
+
+                    if (Objects.equals(dd, new SimpleDateFormat("yyyy-MM-dd").format(new Date())))
+                    {
+                        if (item.getStatus() == 1)
+                        {
+                            if (item.getValidationType().trim().equals("QR Code"))
+                            {
+                                Log.d("click" , "QR Code");
+
+
+                                Intent intent = new Intent(context , Qr2.class);
+                                intent.putExtra("data" , item.getActivityId());
+                                context.startActivity(intent);
+                            }
+                            else if (item.getValidationType().trim().equals("NFC"))
+                            {
+                                Log.d("click" , "NFC");
+
+                                Intent intent = new Intent(context , Scan2.class);
+                                intent.putExtra("data" , item.getActivityId());
+                                context.startActivity(intent);
+                            }
+                            else if (item.getValidationType().trim().equals("Check"))
+                            {
+
+                                Log.d("click" , "Check");
+
+                                final Dialog dialog = new Dialog(context);
+                                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                dialog.setCancelable(false);
+                                dialog.setContentView(R.layout.check_dialog);
+                                dialog.show();
+
+                                Button ok = (Button)dialog.findViewById(R.id.ok);
+                                Button cancel = (Button)dialog.findViewById(R.id.cancel);
+                                TextView name = (TextView)dialog.findViewById(R.id.name);
+
+                                name.setText("Confirm completion of " + item.getActivityName());
+
+                                cancel.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        dialog.dismiss();
+
+                                    }
+                                });
+
+                                ok.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+
+                                        RestAdapter restAdapter = new RestAdapter.Builder()
+                                                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
+                                                .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
+                                        API_Interface apiInterface = restAdapter.create(API_Interface.class);
+
+                                        apiInterface.validate(item.getActivityId(), "", String.valueOf(lat), String.valueOf(lang), new Callback<Integer>() {
+                                            @Override
+                                            public void success(Integer integer, Response response) {
+
+                                                if (integer == 0)
+                                                {
+
+                                                    RestAdapter restAdapter = new RestAdapter.Builder()
+                                                            .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
+                                                            .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
+                                                    API_Interface apiInterface = restAdapter.create(API_Interface.class);
+
+
+                                                    apiInterface.getActivityList(prefs.getPreferencesString(Activity.this, "mail_id") , dd , new Callback<List<activityBean>>() {
+                                                        @Override
+                                                        public void success(List<activityBean> list, Response response) {
+
+                                                            adapter.setGridData(list);
+
+                                                        }
+
+                                                        @Override
+                                                        public void failure(RetrofitError error) {
+
+                                                        }
+                                                    });
+
+                                                    dialog.dismiss();
+                                                }
+                                                else if (integer == -99999)
+                                                {
+
+                                                    Dialog dialog1 = new Dialog(Activity.this);
+                                                    dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                                    dialog1.setCancelable(true);
+                                                    dialog1.setContentView(R.layout.location_dialog);
+                                                    dialog1.show();
+                                                    dialog.dismiss();
+
+
+                                                }
+                                                else if (integer>0)
+                                                {
+                                                    Dialog dialog1 = new Dialog(Activity.this);
+                                                    dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                                    dialog1.setCancelable(true);
+                                                    dialog1.setContentView(R.layout.done_dialog);
+                                                    dialog1.show();
+
+                                                    TextView text = (TextView)dialog1.findViewById(R.id.text);
+
+                                                    text.setText("Incorrect Sequence : Missed Activity " + String.valueOf(integer));
+
+                                                    dialog.dismiss();
+                                                }else if (integer<0 && integer > -99999)
+                                                {
+                                                    Dialog dialog1 = new Dialog(Activity.this);
+                                                    dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                                    dialog1.setCancelable(true);
+                                                    dialog1.setContentView(R.layout.not_done_dialog);
+                                                    dialog1.show();
+
+                                                    TextView text = (TextView)dialog1.findViewById(R.id.text);
+
+                                                    text.setText("Incorrect Sequence : Missed Activity " + String.valueOf(integer));
+
+                                                    dialog.dismiss();
+                                                }
+
+
+
+                                            }
+
+                                            @Override
+                                            public void failure(RetrofitError error) {
+
+                                            }
+                                        });
+
+
+                                    }
+                                });
+
+
+
+
+                            }
+                        }
+                    }
+
+
+
+
+
+
+
+
+                }
+            });
+
+
+
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder{
+
+
+            TextView sno , activity , type;
+            ImageButton info , check;
+
+
+            ViewHolder(View itemView) {
+                super(itemView);
+
+                sno = (TextView) itemView.findViewById(R.id.sno);
+                activity = (TextView)itemView.findViewById(R.id.activity);
+                type = (TextView)itemView.findViewById(R.id.type);
+
+                info = (ImageButton) itemView.findViewById(R.id.info);
+                check = (ImageButton)itemView.findViewById(R.id.perform);
+
+            }
+        }
+
+
+
+
+    }
+
+
 
 }

@@ -126,56 +126,7 @@ public class Home extends AppCompatActivity {
         ((TextView) findViewById(R.id.tv_month)).setText(formattedDate.substring(3, 6));
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-            if (ActivityCompat.checkSelfPermission(Home.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.CAMERA}, 2900);
-            } else {
-
-
-            }
-            if (ActivityCompat.checkSelfPermission(Home.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, 2905);
-            }
-            if (ActivityCompat.checkSelfPermission(Home.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(Home.this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-
-                requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        android.Manifest.permission.READ_EXTERNAL_STORAGE}, 2902);
-            } else {
-                if (Helper.checkInternetConnection(Home.this)) {
-                    callApi();
-                    DbDataUpload dbDataUpload = new DbDataUpload(this);
-                    dbHelper.Events();
-                    progressDialog.show();
-                } else {
-                    tv_name.setText("Hi\n" + dbHelper.getEmployee(prefs.getPreferencesString(Home.this, "mail_id")).get(0));
-
-                    if (prefs.getPreferencesString(Home.this, "login").equals("login")) {
-                        storeDb();
-                    }
-                    flagscan = true;
-                    Log.e("Login", "loggg");
-                }
-            }
-        } else {
-
-            if (Helper.checkInternetConnection(Home.this)) {
-                callApi();
-                DbDataUpload dbDataUpload = new DbDataUpload(this);
-                dbHelper.Events();
-                progressDialog.show();
-            } else {
-
-                if (prefs.getPreferencesString(Home.this, "login").equals("login")) {
-                    storeDb();
-                }
-                tv_name.setText("Hi\n" + dbHelper.getEmployee(prefs.getPreferencesString(Home.this, "mail_id")).get(0));
-                flagscan = true;
-                Log.e("Login", "loggg");
-            }
-
-        }
 
 
         ((Button) findViewById(R.id.btn_logout)).setOnClickListener(new View.OnClickListener() {
@@ -353,6 +304,13 @@ public class Home extends AppCompatActivity {
 
 
     }
+
+
+
+
+
+
+
 
 
     private void callCameraCode() {
@@ -688,6 +646,56 @@ public class Home extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            if (ActivityCompat.checkSelfPermission(Home.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, 2900);
+            } else {
+
+
+            }
+            if (ActivityCompat.checkSelfPermission(Home.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, 2905);
+            }
+            if (ActivityCompat.checkSelfPermission(Home.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(Home.this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+                requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE}, 2902);
+            } else {
+                if (Helper.checkInternetConnection(Home.this)) {
+                    callApi();
+                    DbDataUpload dbDataUpload = new DbDataUpload(this);
+                    dbHelper.Events();
+                    progressDialog.show();
+                } else {
+                    tv_name.setText("Hi\n" + dbHelper.getEmployee(prefs.getPreferencesString(Home.this, "mail_id")).get(0));
+
+                    if (prefs.getPreferencesString(Home.this, "login").equals("login")) {
+                        storeDb();
+                    }
+                    flagscan = true;
+                    Log.e("Login", "loggg");
+                }
+            }
+        } else {
+
+            if (Helper.checkInternetConnection(Home.this)) {
+                callApi();
+                DbDataUpload dbDataUpload = new DbDataUpload(this);
+                dbHelper.Events();
+                progressDialog.show();
+            } else {
+
+                if (prefs.getPreferencesString(Home.this, "login").equals("login")) {
+                    storeDb();
+                }
+                tv_name.setText("Hi\n" + dbHelper.getEmployee(prefs.getPreferencesString(Home.this, "mail_id")).get(0));
+                flagscan = true;
+                Log.e("Login", "loggg");
+            }
+
+        }
 
     }
 
@@ -767,9 +775,9 @@ public class Home extends AppCompatActivity {
         Uri myUri1 = Uri.parse(myDir + "/image.png");
         Log.e("Photo", myUri1.toString());
         Picasso.with(Home.this).
-                load(myUri1)//.
-              /*  placeholder(R.drawable.profile_pic) // optional
-                .error(R.drawable.profile_pic)*/
+                load(myUri1).
+                placeholder(R.drawable.avatar) // optional
+                .error(R.drawable.avatar)
                 .memoryPolicy(MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
                 .into(ivProfilePic);
@@ -788,12 +796,16 @@ public class Home extends AppCompatActivity {
             @Override
             public void success(HomePojo buddypojo, Response response) {
 
-                prefs.setPreferencesString(Home.this, "emp_code", buddypojo.getEmpCode());
+                prefs.setPreferencesString(Home.this, "emp_code", buddypojo.getEmpId());
+
+
 
                 prefs.setPreferencesString(Home.this, "shift_id", buddypojo.getShiftId());
                 if (prefs.getPreferencesString(Home.this, "login").equals("login")) {
                     hitEventApi();
                 }
+
+                Constraints.LoginId = buddypojo.getLoginId();
 
                 tv_name.setText("Hi\n" + buddypojo.getFirst() + " " + buddypojo.getLast());
                 prefs.setPreferencesString(Home.this, "namedata", buddypojo.getFirst() + " " + buddypojo.getLast());

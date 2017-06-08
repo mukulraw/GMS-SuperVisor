@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="10dp"
+    android:minWidth="300dp"
+    android:id="@+id/container"
     android:paddingBottom="10dp"
     android:orientation="horizontal">
 
     <LinearLayout
-        android:id="@+id/ll_msg"
+        android:id="@+id/add_bubble"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#40019EEd"
-        android:gravity="left"
-        android:layout_marginRight="16dp"
-        android:paddingRight="10dp"
         android:orientation="vertical">
 
 

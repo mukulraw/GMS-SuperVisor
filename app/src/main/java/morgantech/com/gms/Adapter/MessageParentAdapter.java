@@ -19,6 +19,7 @@ import java.util.List;
 import morgantech.com.gms.MessagingList;
 import morgantech.com.gms.Pojo.MessageParentPojo;
 import morgantech.com.gms.R;
+import morgantech.com.gms.Utils.Constraints;
 
 
 public class MessageParentAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -50,7 +51,7 @@ public class MessageParentAdapter  extends RecyclerView.Adapter<RecyclerView.Vie
         ImageLoader loader = ImageLoader.getInstance();
 
 
-        loader.displayImage("http://115.118.242.137:5000/GuardIT-RWS/rest/myresource/getincidentLogo?inci_type=" + msgparentPojos.get(position).getLogoType() , holder.img);
+        loader.displayImage("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource/getincidentLogo?inci_type=" + msgparentPojos.get(position).getLogoType() , holder.img);
 
 
 

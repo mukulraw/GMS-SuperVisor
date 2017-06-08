@@ -6,7 +6,7 @@ package morgantech.com.gms.Pojo;
 
 public class MessageParentPojo {
     private Integer id;
-    private Integer from_id;
+    private String from_id;
     private Integer to_id;
     private Integer incident_id;
     private String subject;
@@ -24,11 +24,11 @@ public class MessageParentPojo {
         this.id = id;
     }
 
-    public Integer getFromId() {
+    public String getFromId() {
         return from_id;
     }
 
-    public void setFromId(Integer fromId) {
+    public void setFromId(String fromId) {
         this.from_id = fromId;
     }
 

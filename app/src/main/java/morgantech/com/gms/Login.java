@@ -481,10 +481,17 @@ public class Login extends AppCompatActivity {
 
                 progressDialog.dismiss();
 
-                if (buddypojo.equals("1")) {
-                    Toast.makeText(Login.this, "Email has been to account Kindly check your mail", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(Login.this, "Email Id is not Valid !!", Toast.LENGTH_SHORT).show();
+                if (buddypojo.equals("0")) {
+                    Toast.makeText(Login.this, "Email has been sent to your Account, Kindly check your Inbox", Toast.LENGTH_SHORT).show();
+                }
+                else if (buddypojo.equals("1"))
+                {
+                    Toast.makeText(Login.this, "No e Account, Contact Admin", Toast.LENGTH_SHORT).show();
+                }
+                else if (buddypojo.equals("2")){
+                    Toast.makeText(Login.this, "User Doesn't Exist", Toast.LENGTH_SHORT).show();
+
+
                 }
 
             }
