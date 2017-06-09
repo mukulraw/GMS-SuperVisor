@@ -1,6 +1,7 @@
 package morgantech.com.gms.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -60,7 +61,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         if (Objects.equals(Constraints.LoginId, String.valueOf(list.get(position).getFromId())))
         {
             holder.tv_attaendence.setText(list.get(position).getContent());
+            holder.tv_attaendence.setTextColor(Color.WHITE);
             holder.tv_time.setText(list.get(position).getDateTime());
+            holder.tv_time.setTextColor(Color.WHITE);
             holder.layoutToAdd.setBackground(context.getResources().getDrawable(R.drawable.back_me));
             //holder.sender.setBackground(context.getResources().getDrawable(R.drawable.back_me));
             holder.container.setGravity(Gravity.END);
@@ -68,7 +71,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         else
         {
             holder.tv_attaendence.setText(list.get(position).getContent());
+            holder.tv_attaendence.setTextColor(Color.WHITE);
             holder.tv_time.setText(list.get(position).getDateTime());
+            holder.tv_time.setTextColor(Color.WHITE);
             holder.layoutToAdd.setBackground(context.getResources().getDrawable(R.drawable.back_you));
             //holder.sender.setBackground(context.getResources().getDrawable(R.drawable.back_you));
             holder.container.setGravity(Gravity.START);

@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,9 @@ import morgantech.com.gms.Pojo.MessageParentPojo;
 import morgantech.com.gms.R;
 import morgantech.com.gms.Utils.Constraints;
 
+/**
+ * Created by Administrator on 17-01-2017.
+ */
 
 public class MessageParentAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -53,6 +58,14 @@ public class MessageParentAdapter  extends RecyclerView.Adapter<RecyclerView.Vie
 
         loader.displayImage("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource/getincidentLogo?inci_type=" + msgparentPojos.get(position).getLogoType() , holder.img);
 
+        if (position == msgparentPojos.size()-1)
+        {
+            holder.line.setVisibility(View.GONE);
+        }
+        else
+        {
+            holder.line.setVisibility(View.VISIBLE);
+        }
 
 
         holder.ll_parent.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +91,7 @@ public class MessageParentAdapter  extends RecyclerView.Adapter<RecyclerView.Vie
         TextView tv_msghead, tv_time_date,tv_content;
         ImageView img;
         LinearLayout ll_parent;
+        TextView line;
 
         public DataObjectHolder(final View itemView) {
             super(itemView);
@@ -86,6 +100,7 @@ public class MessageParentAdapter  extends RecyclerView.Adapter<RecyclerView.Vie
             tv_content= (TextView) itemView.findViewById(R.id.tv_content);
             ll_parent=(LinearLayout)itemView.findViewById(R.id.ll_parent);
             img=(ImageView) itemView.findViewById(R.id.img);
+            line = (TextView) itemView.findViewById(R.id.line);
 
         }
     }

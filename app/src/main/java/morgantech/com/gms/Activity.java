@@ -105,18 +105,18 @@ public class Activity extends AppCompatActivity {
 
         mont = new ArrayList<>();
 
-        mont.add("January");
-        mont.add("February");
-        mont.add("March");
-        mont.add("April");
+        mont.add("Jan");
+        mont.add("Feb");
+        mont.add("Mar");
+        mont.add("Apr");
         mont.add("May");
-        mont.add("June");
-        mont.add("July");
-        mont.add("August");
-        mont.add("September");
-        mont.add("October");
-        mont.add("November");
-        mont.add("December");
+        mont.add("Jun");
+        mont.add("Jul");
+        mont.add("Aug");
+        mont.add("Sep");
+        mont.add("Oct");
+        mont.add("Nov");
+        mont.add("Dec");
 
         list = new ArrayList<>();
         adapter = new ActivityAdapter(this, list);
@@ -140,7 +140,7 @@ public class Activity extends AppCompatActivity {
 
         int dayofyear = cal.get(Calendar.DAY_OF_YEAR);
         int year = cal.get(Calendar.YEAR);
-        int dayofweek = cal.get(Calendar.DAY_OF_WEEK);
+        int dayofweek = cal.get(Calendar.MONTH);
         int dayofmonth = cal.get(Calendar.DAY_OF_MONTH);
 
 
@@ -271,10 +271,10 @@ public class Activity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         int da = dp.getDayOfMonth();
-                        int month = dp.getMonth() + 1;
+                        int month = dp.getMonth();
 
                         tvDate.setText(String.valueOf(dp.getDayOfMonth()));
-                        tvMonth.setText(mont.get(dp.getMonth()));
+                        tvMonth.setText(mont.get(dp.getMonth()-1));
 
                         String d = "", m = "";
 
