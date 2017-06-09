@@ -203,7 +203,93 @@ public class Qr2 extends AppCompatActivity {
                 .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
-        apiInterface.getQRdata(prefs.getPreferencesString(Qr2.this, "mail_id"), String.valueOf(lat), String.valueOf(lang),
+
+
+
+        apiInterface.validate(getIntent().getStringExtra("data") , value , "" ,  String.valueOf(lat), String.valueOf(lang), new Callback<Integer>() {
+            @Override
+            public void success(Integer integer, Response response) {
+
+                if (integer == 0)
+                {
+                    finish();
+                }
+                else if (integer == -99999)
+                {
+
+                    Dialog dialog1 = new Dialog(Qr2.this);
+                    dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog1.setCancelable(true);
+                    dialog1.setContentView(R.layout.location_dialog);
+                    dialog1.show();
+
+                    dialog1.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+
+                            finish();
+
+                        }
+                    });
+
+
+                }
+                else if (integer>0)
+                {
+                    Dialog dialog1 = new Dialog(Qr2.this);
+                    dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog1.setCancelable(true);
+                    dialog1.setContentView(R.layout.done_dialog);
+                    dialog1.show();
+
+                    TextView text = (TextView)dialog1.findViewById(R.id.text);
+
+                    text.setText("Incorrect Sequence : Missed Activity " + String.valueOf(integer));
+
+
+                    dialog1.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+
+                            finish();
+
+                        }
+                    });
+
+                }else if (integer<0 && integer > -99999)
+                {
+                    Dialog dialog1 = new Dialog(Qr2.this);
+                    dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog1.setCancelable(true);
+                    dialog1.setContentView(R.layout.not_done_dialog);
+                    dialog1.show();
+
+                    TextView text = (TextView)dialog1.findViewById(R.id.text);
+
+                    text.setText("Incorrect Sequence : Missed Activity " + String.valueOf(integer));
+
+                    dialog1.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+
+                            finish();
+
+                        }
+                    });
+
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+
+
+
+        /*apiInterface.getQRdata(prefs.getPreferencesString(Qr2.this, "mail_id"), String.valueOf(lat), String.valueOf(lang),
                 value, new Callback<String>() {
                     @Override
                     public void success(String buddypojo, Response response) {
@@ -230,86 +316,7 @@ public class Qr2 extends AppCompatActivity {
                                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
                         API_Interface apiInterface = restAdapter.create(API_Interface.class);
 
-                        apiInterface.validate(getIntent().getStringExtra("data") , "", String.valueOf(lat), String.valueOf(lang), new Callback<Integer>() {
-                            @Override
-                            public void success(Integer integer, Response response) {
 
-                                if (integer == 0)
-                                {
-                                    finish();
-                                }
-                                else if (integer == -99999)
-                                {
-
-                                    Dialog dialog1 = new Dialog(Qr2.this);
-                                    dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                    dialog1.setCancelable(true);
-                                    dialog1.setContentView(R.layout.location_dialog);
-                                    dialog1.show();
-
-                                    dialog1.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                        @Override
-                                        public void onDismiss(DialogInterface dialog) {
-
-                                            finish();
-
-                                        }
-                                    });
-
-
-                                }
-                                else if (integer>0)
-                                {
-                                    Dialog dialog1 = new Dialog(Qr2.this);
-                                    dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                    dialog1.setCancelable(true);
-                                    dialog1.setContentView(R.layout.done_dialog);
-                                    dialog1.show();
-
-                                    TextView text = (TextView)dialog1.findViewById(R.id.text);
-
-                                    text.setText("Incorrect Sequence : Missed Activity " + String.valueOf(integer));
-
-
-                                    dialog1.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                        @Override
-                                        public void onDismiss(DialogInterface dialog) {
-
-                                            finish();
-
-                                        }
-                                    });
-
-                                }else if (integer<0 && integer > -99999)
-                                {
-                                    Dialog dialog1 = new Dialog(Qr2.this);
-                                    dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                    dialog1.setCancelable(true);
-                                    dialog1.setContentView(R.layout.not_done_dialog);
-                                    dialog1.show();
-
-                                    TextView text = (TextView)dialog1.findViewById(R.id.text);
-
-                                    text.setText("Incorrect Sequence : Missed Activity " + String.valueOf(integer));
-
-                                    dialog1.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                        @Override
-                                        public void onDismiss(DialogInterface dialog) {
-
-                                            finish();
-
-                                        }
-                                    });
-
-                                }
-
-                            }
-
-                            @Override
-                            public void failure(RetrofitError error) {
-
-                            }
-                        });
 
 
                     }
@@ -323,7 +330,7 @@ public class Qr2 extends AppCompatActivity {
                         textView2.setText("Tag - " + value + "\n" + "Status - Success\nDate - " + df + "\nTime - " + df1);
 
                     }
-                });
+                });*/
     }
 
     private void hitEventApi() {

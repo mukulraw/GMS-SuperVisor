@@ -209,7 +209,7 @@ public class ScheduleActivity extends AppCompatActivity {
         progressDialog.show();
 
 
-        apiInterface.getshiftSchudule(prefs.getPreferencesString(ScheduleActivity.this, "shift_id").toString()
+        apiInterface.getshiftSchudule(prefs.getPreferencesString(ScheduleActivity.this, "shift_id")
                 , append, new Callback<ScheduleParentPojo>() {
                     @Override
                     public void success(ScheduleParentPojo buddypojo, Response response) {

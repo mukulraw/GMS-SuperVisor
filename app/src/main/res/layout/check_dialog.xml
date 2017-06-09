@@ -6,9 +6,65 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:id="@+id/name"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="Activity Name"
+        android:paddingTop="10dp"
+        android:textColor="@color/colorAccent"
+        android:paddingBottom="5dp"
         />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:id="@+id/location"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="Description"
+        android:paddingTop="5dp"
+        android:textColor="@color/colorAccent"
+        android:paddingBottom="5dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:id="@+id/desc"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="Remarks"
+        android:paddingTop="5dp"
+        android:textColor="@color/colorAccent"
+        android:paddingBottom="5dp"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:id="@+id/remarks"
+        android:gravity="start"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:hint="Remarks"
+        android:padding="5dp"
+        android:background="@drawable/txt_bak_ground"
+        />
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,9 +87,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:text="NO"
+            android:id="@+id/no"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:text="OK"
-            android:id="@+id/ok"
+            android:text="YES"
+            android:id="@+id/yes"
             />
 
     </RelativeLayout>

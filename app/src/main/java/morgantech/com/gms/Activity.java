@@ -23,10 +23,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.MemoryPolicy;
@@ -67,7 +69,7 @@ import retrofit.client.Response;
 public class Activity extends AppCompatActivity {
 
 
-    TextView tv_online , tv_name;
+    TextView tv_online, tv_name;
     ImageView ivProfilePic, check_offline;
     ProgressDialog progressDialog;
     DbHelper dbHelper;
@@ -81,20 +83,25 @@ public class Activity extends AppCompatActivity {
 
     List<String> mont;
 
-    TextView tvDate , tvMonth;
+    TextView tvDate, tvMonth;
 
     String dd = "";
 
     boolean flagscan = false;
     SimpleDateFormat df1;
+
+    Button submit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_);
         check_offline = (ImageView) findViewById(R.id.check_offline);
 
-        tvDate = (TextView)findViewById(R.id.tv_date);
-        tvMonth = (TextView)findViewById(R.id.tv_month);
+        tvDate = (TextView) findViewById(R.id.tv_date);
+        tvMonth = (TextView) findViewById(R.id.tv_month);
+
+        submit = (Button) findViewById(R.id.submit);
 
         mont = new ArrayList<>();
 
@@ -112,17 +119,16 @@ public class Activity extends AppCompatActivity {
         mont.add("December");
 
         list = new ArrayList<>();
-        adapter = new ActivityAdapter(this , list);
+        adapter = new ActivityAdapter(this, list);
 
-        date = (LinearLayout)findViewById(R.id.date);
-
+        date = (LinearLayout) findViewById(R.id.date);
 
 
         ivProfilePic = (ImageView) findViewById(R.id.iv_profile);
 
-        grid = (RecyclerView)findViewById(R.id.recycler);
+        grid = (RecyclerView) findViewById(R.id.recycler);
 
-        manager = new GridLayoutManager(this , 1);
+        manager = new GridLayoutManager(this, 1);
 
         dd = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
@@ -138,11 +144,8 @@ public class Activity extends AppCompatActivity {
         int dayofmonth = cal.get(Calendar.DAY_OF_MONTH);
 
 
-
         tvDate.setText(String.valueOf(dayofmonth));
         tvMonth.setText(mont.get(dayofweek));
-
-
 
 
         df1 = new SimpleDateFormat("HH:mm");
@@ -157,8 +160,6 @@ public class Activity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please Wait");
-
-
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -214,9 +215,41 @@ public class Activity extends AppCompatActivity {
 
 
 
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                RestAdapter restAdapter = new RestAdapter.Builder()
+                        .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
+                        .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
+                API_Interface apiInterface = restAdapter.create(API_Interface.class);
+
+
+                apiInterface.submitActivity(prefs.getPreferencesString(Activity.this, "mail_id"), prefs.getPreferencesString(Activity.this, "shift_id") , "" , "" , new Callback<Integer>() {
+                    @Override
+                    public void success(Integer list, Response response) {
+
+                        if (list == 0)
+                        {
+                            Toast.makeText(Activity.this , "Activity submitted successfully" , Toast.LENGTH_SHORT).show();
+                        }
+                        else if (list == 1)
+                        {
+                            Toast.makeText(Activity.this , "Something went wrong" , Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
 
 
 
+            }
+        });
 
 
 
@@ -230,8 +263,8 @@ public class Activity extends AppCompatActivity {
                 dialog.setContentView(R.layout.date_filter);
                 dialog.show();
 
-                final DatePicker dp = (DatePicker)dialog.findViewById(R.id.date_picker);
-                Button submit = (Button)dialog.findViewById(R.id.submit);
+                final DatePicker dp = (DatePicker) dialog.findViewById(R.id.date_picker);
+                Button submit = (Button) dialog.findViewById(R.id.submit);
 
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -245,26 +278,20 @@ public class Activity extends AppCompatActivity {
 
                         String d = "", m = "";
 
-                        if (da < 10)
-                        {
+                        if (da < 10) {
                             d = "0" + String.valueOf(da);
-                        }
-                        else
-                        {
+                        } else {
                             d = String.valueOf(da);
                         }
-                        if (month < 10)
-                        {
+                        if (month < 10) {
                             m = "0" + String.valueOf(month);
-                        }
-                        else
-                        {
+                        } else {
                             m = String.valueOf(month);
                         }
 
                         //getLocations(String.valueOf(dp.getYear()) + "-" + m + "-" + d);
 
-                        dd =  String.valueOf(dp.getYear()) + "-" + m + "-" + d;
+                        dd = String.valueOf(dp.getYear()) + "-" + m + "-" + d;
 
                         RestAdapter restAdapter = new RestAdapter.Builder()
                                 .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
@@ -272,7 +299,7 @@ public class Activity extends AppCompatActivity {
                         API_Interface apiInterface = restAdapter.create(API_Interface.class);
 
 
-                        apiInterface.getActivityList(prefs.getPreferencesString(Activity.this, "mail_id") , String.valueOf(dp.getYear()) + "-" + m + "-" + d , new Callback<List<activityBean>>() {
+                        apiInterface.getActivityList(prefs.getPreferencesString(Activity.this, "mail_id"), String.valueOf(dp.getYear()) + "-" + m + "-" + d, new Callback<List<activityBean>>() {
                             @Override
                             public void success(List<activityBean> list, Response response) {
 
@@ -294,10 +321,6 @@ public class Activity extends AppCompatActivity {
 
             }
         });
-
-
-
-
 
 
         ((LinearLayout) findViewById(R.id.ll_events)).setOnClickListener(new View.OnClickListener() {
@@ -350,7 +373,6 @@ public class Activity extends AppCompatActivity {
         });
 
 
-
     }
 
 
@@ -364,7 +386,7 @@ public class Activity extends AppCompatActivity {
         API_Interface apiInterface = restAdapter.create(API_Interface.class);
 
 
-        apiInterface.getActivityList(prefs.getPreferencesString(Activity.this, "mail_id") , dd , new Callback<List<activityBean>>() {
+        apiInterface.getActivityList(prefs.getPreferencesString(Activity.this, "mail_id"), dd, new Callback<List<activityBean>>() {
             @Override
             public void success(List<activityBean> list, Response response) {
 
@@ -553,7 +575,7 @@ public class Activity extends AppCompatActivity {
                 URLConnection conection = url.openConnection();
                 conection.connect();
 
-                Log.d("asdasd" , audioUrl[0]);
+                Log.d("asdasd", audioUrl[0]);
 
                 int lenghtOfFile = conection.getContentLength();
                 // input stream to read file - with 8k buffer
@@ -604,12 +626,11 @@ public class Activity extends AppCompatActivity {
             Log.e("Photo", myUri1.toString());
 
 
-
             Picasso.with(Activity.this).
                     load(myUri1).
 
-                placeholder(R.drawable.avatar) // optional
-                .error(R.drawable.avatar)
+                    placeholder(R.drawable.avatar) // optional
+                    .error(R.drawable.avatar)
                     .memoryPolicy(MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE)
                     .into(ivProfilePic);
@@ -618,8 +639,7 @@ public class Activity extends AppCompatActivity {
     }
 
 
-
-    public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder>{
+    public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> {
 
         private Context context;
         LocationFinder locationFinder;
@@ -629,22 +649,20 @@ public class Activity extends AppCompatActivity {
         Calendar c;
         List<activityBean> list = new ArrayList<>();
 
-        ActivityAdapter(Context context, List<activityBean> list)
-        {
+        ActivityAdapter(Context context, List<activityBean> list) {
             this.context = context;
             this.list = list;
         }
 
-        void setGridData(List<activityBean> list)
-        {
+        void setGridData(List<activityBean> list) {
             this.list = list;
             notifyDataSetChanged();
         }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.activity_list_model , parent , false);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.activity_list_model, parent, false);
             return new ViewHolder(view);
         }
 
@@ -664,11 +682,9 @@ public class Activity extends AppCompatActivity {
             holder.activity.setText(item.getLocation());
             holder.type.setText(item.getValidationType());
 
-            if (item.getStatus() == 1)
-            {
+            if (item.getStatus() == 1) {
                 holder.check.setBackground(context.getResources().getDrawable(R.drawable.check_red));
-            }else if (item.getStatus() == 0)
-            {
+            } else if (item.getStatus() == 0) {
                 holder.check.setBackground(context.getResources().getDrawable(R.drawable.check_green));
             }
 
@@ -682,8 +698,8 @@ public class Activity extends AppCompatActivity {
                     dialog.setCancelable(true);
                     dialog.setContentView(R.layout.info_dialog);
 
-                    TextView name = (TextView)dialog.findViewById(R.id.location);
-                    TextView desc = (TextView)dialog.findViewById(R.id.desc);
+                    TextView name = (TextView) dialog.findViewById(R.id.location);
+                    TextView desc = (TextView) dialog.findViewById(R.id.desc);
 
                     name.setText(item.getActivityName());
                     desc.setText(item.getActivityDesc());
@@ -697,35 +713,27 @@ public class Activity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    Log.d("click" , new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "  " + dd);
+                    Log.d("click", new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "  " + dd);
 
 
-
-                    if (Objects.equals(dd, new SimpleDateFormat("yyyy-MM-dd").format(new Date())))
-                    {
-                        if (item.getStatus() == 1)
-                        {
-                            if (item.getValidationType().trim().equals("QR Code"))
-                            {
-                                Log.d("click" , "QR Code");
+                    if (Objects.equals(dd, new SimpleDateFormat("yyyy-MM-dd").format(new Date()))) {
+                        if (item.getStatus() == 1) {
+                            if (item.getValidationType().trim().equals("QR Code")) {
+                                Log.d("click", "QR Code");
 
 
-                                Intent intent = new Intent(context , Qr2.class);
-                                intent.putExtra("data" , item.getActivityId());
+                                Intent intent = new Intent(context, Qr2.class);
+                                intent.putExtra("data", item.getActivityId());
                                 context.startActivity(intent);
-                            }
-                            else if (item.getValidationType().trim().equals("NFC"))
-                            {
-                                Log.d("click" , "NFC");
+                            } else if (item.getValidationType().trim().equals("NFC")) {
+                                Log.d("click", "NFC");
 
-                                Intent intent = new Intent(context , Scan2.class);
-                                intent.putExtra("data" , item.getActivityId());
+                                Intent intent = new Intent(context, Scan2.class);
+                                intent.putExtra("data", item.getActivityId());
                                 context.startActivity(intent);
-                            }
-                            else if (item.getValidationType().trim().equals("Check"))
-                            {
+                            } else if (item.getValidationType().trim().equals("Check")) {
 
-                                Log.d("click" , "Check");
+                                Log.d("click", "Check");
 
                                 final Dialog dialog = new Dialog(context);
                                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -733,11 +741,16 @@ public class Activity extends AppCompatActivity {
                                 dialog.setContentView(R.layout.check_dialog);
                                 dialog.show();
 
-                                Button ok = (Button)dialog.findViewById(R.id.ok);
-                                Button cancel = (Button)dialog.findViewById(R.id.cancel);
-                                TextView name = (TextView)dialog.findViewById(R.id.name);
+                                Button yes = (Button) dialog.findViewById(R.id.yes);
+                                Button no = (Button) dialog.findViewById(R.id.no);
+                                Button cancel = (Button) dialog.findViewById(R.id.cancel);
+                                TextView name = (TextView) dialog.findViewById(R.id.location);
+                                TextView desc = (TextView) dialog.findViewById(R.id.desc);
+                                final EditText remarks = (EditText) dialog.findViewById(R.id.remarks);
 
-                                name.setText("Confirm completion of " + item.getActivityName());
+                                desc.setText(item.getActivityDesc());
+
+                                name.setText(item.getActivityName());
 
                                 cancel.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -748,7 +761,12 @@ public class Activity extends AppCompatActivity {
                                     }
                                 });
 
-                                ok.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+
+                                no.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
 
@@ -758,12 +776,115 @@ public class Activity extends AppCompatActivity {
                                                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
                                         API_Interface apiInterface = restAdapter.create(API_Interface.class);
 
-                                        apiInterface.validate(item.getActivityId(), "", String.valueOf(lat), String.valueOf(lang), new Callback<Integer>() {
+
+                                        if (!remarks.getText().toString().trim().equals(""))
+                                        {
+                                            apiInterface.validate(item.getActivityId(), "0", remarks.getText().toString(), String.valueOf(lat), String.valueOf(lang), new Callback<Integer>() {
+                                                @Override
+                                                public void success(Integer integer, Response response) {
+
+                                                    if (integer == 0) {
+
+                                                        RestAdapter restAdapter = new RestAdapter.Builder()
+                                                                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
+                                                                .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
+                                                        API_Interface apiInterface = restAdapter.create(API_Interface.class);
+
+
+                                                        apiInterface.getActivityList(prefs.getPreferencesString(Activity.this, "mail_id"), dd, new Callback<List<activityBean>>() {
+                                                            @Override
+                                                            public void success(List<activityBean> list, Response response) {
+
+                                                                adapter.setGridData(list);
+
+                                                            }
+
+                                                            @Override
+                                                            public void failure(RetrofitError error) {
+
+                                                            }
+                                                        });
+
+                                                        dialog.dismiss();
+                                                    } else if (integer == -99999) {
+
+                                                        Dialog dialog1 = new Dialog(Activity.this);
+                                                        dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                                        dialog1.setCancelable(true);
+                                                        dialog1.setContentView(R.layout.location_dialog);
+                                                        dialog1.show();
+                                                        dialog.dismiss();
+
+
+                                                    } else if (integer > 0) {
+                                                        Dialog dialog1 = new Dialog(Activity.this);
+                                                        dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                                        dialog1.setCancelable(true);
+                                                        dialog1.setContentView(R.layout.done_dialog);
+                                                        dialog1.show();
+
+                                                        TextView text = (TextView) dialog1.findViewById(R.id.text);
+
+                                                        text.setText("Incorrect Sequence : Missed Activity " + String.valueOf(integer));
+
+                                                        dialog.dismiss();
+                                                    } else if (integer < 0 && integer > -99999) {
+                                                        Dialog dialog1 = new Dialog(Activity.this);
+                                                        dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                                        dialog1.setCancelable(true);
+                                                        dialog1.setContentView(R.layout.not_done_dialog);
+                                                        dialog1.show();
+
+                                                        TextView text = (TextView) dialog1.findViewById(R.id.text);
+
+                                                        text.setText("Incorrect Sequence : Missed Activity " + String.valueOf(integer));
+
+                                                        dialog.dismiss();
+                                                    }
+
+
+                                                }
+
+                                                @Override
+                                                public void failure(RetrofitError error) {
+
+                                                }
+                                            });
+                                        }
+                                        else
+                                        {
+                                            remarks.setError("This field is mandatory");
+                                        }
+
+
+
+
+
+                                    }
+                                });
+
+
+
+
+
+
+                                yes.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+
+                                        RestAdapter restAdapter = new RestAdapter.Builder()
+                                                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
+                                                .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
+                                        API_Interface apiInterface = restAdapter.create(API_Interface.class);
+
+                                        Log.d("Asd" , String.valueOf(lat) +  String.valueOf(lang));
+
+                                        apiInterface.validate(item.getActivityId(), "1", remarks.getText().toString(), String.valueOf(lat), String.valueOf(lang), new Callback<Integer>() {
                                             @Override
                                             public void success(Integer integer, Response response) {
 
-                                                if (integer == 0)
-                                                {
+                                                if (integer == 0) {
 
                                                     RestAdapter restAdapter = new RestAdapter.Builder()
                                                             .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
@@ -771,7 +892,7 @@ public class Activity extends AppCompatActivity {
                                                     API_Interface apiInterface = restAdapter.create(API_Interface.class);
 
 
-                                                    apiInterface.getActivityList(prefs.getPreferencesString(Activity.this, "mail_id") , dd , new Callback<List<activityBean>>() {
+                                                    apiInterface.getActivityList(prefs.getPreferencesString(Activity.this, "mail_id"), dd, new Callback<List<activityBean>>() {
                                                         @Override
                                                         public void success(List<activityBean> list, Response response) {
 
@@ -786,9 +907,7 @@ public class Activity extends AppCompatActivity {
                                                     });
 
                                                     dialog.dismiss();
-                                                }
-                                                else if (integer == -99999)
-                                                {
+                                                } else if (integer == -99999) {
 
                                                     Dialog dialog1 = new Dialog(Activity.this);
                                                     dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -798,35 +917,31 @@ public class Activity extends AppCompatActivity {
                                                     dialog.dismiss();
 
 
-                                                }
-                                                else if (integer>0)
-                                                {
+                                                } else if (integer > 0) {
                                                     Dialog dialog1 = new Dialog(Activity.this);
                                                     dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                                     dialog1.setCancelable(true);
                                                     dialog1.setContentView(R.layout.done_dialog);
                                                     dialog1.show();
 
-                                                    TextView text = (TextView)dialog1.findViewById(R.id.text);
+                                                    TextView text = (TextView) dialog1.findViewById(R.id.text);
 
                                                     text.setText("Incorrect Sequence : Missed Activity " + String.valueOf(integer));
 
                                                     dialog.dismiss();
-                                                }else if (integer<0 && integer > -99999)
-                                                {
+                                                } else if (integer < 0 && integer > -99999) {
                                                     Dialog dialog1 = new Dialog(Activity.this);
                                                     dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                                     dialog1.setCancelable(true);
                                                     dialog1.setContentView(R.layout.not_done_dialog);
                                                     dialog1.show();
 
-                                                    TextView text = (TextView)dialog1.findViewById(R.id.text);
+                                                    TextView text = (TextView) dialog1.findViewById(R.id.text);
 
                                                     text.setText("Incorrect Sequence : Missed Activity " + String.valueOf(integer));
 
                                                     dialog.dismiss();
                                                 }
-
 
 
                                             }
@@ -842,23 +957,13 @@ public class Activity extends AppCompatActivity {
                                 });
 
 
-
-
                             }
                         }
                     }
 
 
-
-
-
-
-
-
                 }
             });
-
-
 
 
         }
@@ -868,31 +973,28 @@ public class Activity extends AppCompatActivity {
             return list.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder{
+        class ViewHolder extends RecyclerView.ViewHolder {
 
 
-            TextView sno , activity , type;
-            ImageButton info , check;
+            TextView sno, activity, type;
+            ImageButton info, check;
 
 
             ViewHolder(View itemView) {
                 super(itemView);
 
                 sno = (TextView) itemView.findViewById(R.id.sno);
-                activity = (TextView)itemView.findViewById(R.id.activity);
-                type = (TextView)itemView.findViewById(R.id.type);
+                activity = (TextView) itemView.findViewById(R.id.activity);
+                type = (TextView) itemView.findViewById(R.id.type);
 
                 info = (ImageButton) itemView.findViewById(R.id.info);
-                check = (ImageButton)itemView.findViewById(R.id.perform);
+                check = (ImageButton) itemView.findViewById(R.id.perform);
 
             }
         }
 
 
-
-
     }
-
 
 
 }

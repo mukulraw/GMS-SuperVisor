@@ -128,7 +128,13 @@ public interface API_Interface {
     void getActivityList(@Query("email_id") String abc , @Query("date") String date , Callback<List<activityBean>> callback);
 
     @GET("/validateactivity")
-    void validate(@Query("activity_id") String actiId, @Query("validate_code") String calidateCode, @Query("latitude") String lat,
+    void validate(@Query("activity_id") String actiId, @Query("validate_code") String calidateCode, @Query("validate_remarks") String remarks , @Query("latitude") String lat,
                            @Query("longitude") String lng , Callback<Integer> callback);
+
+    @GET("/submitactivity")
+    void submitActivity(@Query("email_id") String emailId, @Query("shift_id") String shiftId,  @Query("latitude") String lat,
+                  @Query("longitude") String lng , Callback<Integer> callback);
+
+
 
 }
