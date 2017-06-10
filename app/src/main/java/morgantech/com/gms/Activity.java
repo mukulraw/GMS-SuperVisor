@@ -75,6 +75,7 @@ public class Activity extends AppCompatActivity {
     DbHelper dbHelper;
     Calendar c;
     Prefs prefs;
+
     LinearLayout date;
     RecyclerView grid;
     GridLayoutManager manager;
@@ -97,6 +98,8 @@ public class Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_);
         check_offline = (ImageView) findViewById(R.id.check_offline);
+
+
 
         tvDate = (TextView) findViewById(R.id.tv_date);
         tvMonth = (TextView) findViewById(R.id.tv_month);
@@ -642,9 +645,11 @@ public class Activity extends AppCompatActivity {
     public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> {
 
         private Context context;
+
         LocationFinder locationFinder;
+
         double lat = 0.00;
-        double lang = 0.000;
+        double lang = 0.00;
         Prefs prefs;
         Calendar c;
         List<activityBean> list = new ArrayList<>();
@@ -714,7 +719,7 @@ public class Activity extends AppCompatActivity {
                 public void onClick(View v) {
 
                     Log.d("click", new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "  " + dd);
-
+                    Log.d("Asd" , String.valueOf(locationFinder.getLatitude()) +  String.valueOf(lang));
 
                     if (Objects.equals(dd, new SimpleDateFormat("yyyy-MM-dd").format(new Date()))) {
                         if (item.getStatus() == 1) {
@@ -779,7 +784,7 @@ public class Activity extends AppCompatActivity {
 
                                         if (!remarks.getText().toString().trim().equals(""))
                                         {
-                                            apiInterface.validate(item.getActivityId(), "0", remarks.getText().toString(), String.valueOf(lat), String.valueOf(lang), new Callback<Integer>() {
+                                            apiInterface.validate(item.getActivityId(), "0", remarks.getText().toString(), String.valueOf(locationFinder.getLatitude()), String.valueOf(locationFinder.getLongitude()), new Callback<Integer>() {
                                                 @Override
                                                 public void success(Integer integer, Response response) {
 

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -197,6 +198,8 @@ public class Qr2 extends AppCompatActivity {
 
         final String formattedDate = df.format(c.getTime());
         final String formattedTime = df1.format(c.getTime());
+
+        Log.d("asdasdQR" , value);
 
         progressDialog.show();
         RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
