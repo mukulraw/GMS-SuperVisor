@@ -625,7 +625,7 @@ public class Activity extends AppCompatActivity {
             String root = Environment.getExternalStorageDirectory()
                     .toString();
             File myDir = new File("file:///" + root + "/morgan");
-            Uri myUri1 = Uri.parse(myDir + "/image.png");
+            Uri myUri1 = Uri.parse(myDir.getPath() + "/image.png");
             Log.e("Photo", myUri1.toString());
 
 
@@ -725,8 +725,6 @@ public class Activity extends AppCompatActivity {
                         if (item.getStatus() == 1) {
                             if (item.getValidationType().trim().equals("QR Code")) {
                                 Log.d("click", "QR Code");
-
-
                                 Intent intent = new Intent(context, Qr2.class);
                                 intent.putExtra("data", item.getActivityId());
                                 context.startActivity(intent);

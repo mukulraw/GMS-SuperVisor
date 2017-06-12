@@ -772,7 +772,7 @@ public class Home extends AppCompatActivity {
         String root = Environment.getExternalStorageDirectory()
                 .toString();
         File myDir = new File("file:///" + root + "/morgan");
-        Uri myUri1 = Uri.parse(myDir + "/image.png");
+        Uri myUri1 = Uri.parse(myDir.getPath() + "/image.png");
         Log.e("Photo", myUri1.toString());
         Picasso.with(Home.this).
                 load(myUri1).

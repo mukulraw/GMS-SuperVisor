@@ -77,12 +77,18 @@ public class Scan2 extends AppCompatActivity {
     boolean flagscan = true;
     Prefs prefs;
     Calendar c;
+    String actId = "";
     HorizontalScrollView horiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan2);
+
+        actId = getIntent().getStringExtra("data");
+
+        Log.d("actId" , actId);
+
 
         prefs = new Prefs();
         c = Calendar.getInstance();
@@ -506,7 +512,7 @@ public class Scan2 extends AppCompatActivity {
 
 
 
-        apiInterface.validate(getIntent().getStringExtra("data") , serial_no , "" , String.valueOf(lat), String.valueOf(lang), new Callback<Integer>() {
+        apiInterface.validate(actId , serial_no , "" , String.valueOf(lat), String.valueOf(lang), new Callback<Integer>() {
             @Override
             public void success(Integer integer, Response response) {
 

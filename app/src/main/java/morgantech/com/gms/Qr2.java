@@ -47,12 +47,17 @@ public class Qr2 extends AppCompatActivity {
     Calendar c;
     ImageView iv_stat;
     LinearLayout ll_lower;
+    String actId = "";
     ImageView scanqrcode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr2);
+
+        actId = getIntent().getStringExtra("data");
+
+        Log.d("actId" , actId);
 
         scanqrcode = (ImageView) findViewById(R.id.iv_nfc);
         ll_lower = (LinearLayout) findViewById(R.id.ll_lower);
@@ -209,7 +214,7 @@ public class Qr2 extends AppCompatActivity {
 
 
 
-        apiInterface.validate(getIntent().getStringExtra("data") , value , "" ,  String.valueOf(lat), String.valueOf(lang), new Callback<Integer>() {
+        apiInterface.validate(actId , value , "" ,  String.valueOf(lat), String.valueOf(lang), new Callback<Integer>() {
             @Override
             public void success(Integer integer, Response response) {
 

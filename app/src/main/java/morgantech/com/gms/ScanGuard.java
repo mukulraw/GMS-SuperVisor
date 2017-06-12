@@ -670,7 +670,7 @@ public class ScanGuard extends AppCompatActivity {
         String root = Environment.getExternalStorageDirectory()
                 .toString();
         File myDir = new File("file:///" + root + "/morgan");
-        Uri myUri1 = Uri.parse(myDir + "/imageg.png");
+        Uri myUri1 = Uri.parse(myDir.getPath() + "/imageg.png");
         Log.e("Photo", myUri1.toString());
         Picasso.with(ScanGuard.this).
                 load(myUri1)//.
