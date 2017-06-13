@@ -36,6 +36,7 @@ import android.widget.Toast;
 
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
@@ -810,7 +811,14 @@ public class Home extends AppCompatActivity {
                 tv_name.setText("Hi\n" + buddypojo.getFirst() + " " + buddypojo.getLast());
                 prefs.setPreferencesString(Home.this, "namedata", buddypojo.getFirst() + " " + buddypojo.getLast());
                 dbHelper.employee_tab(buddypojo.getFirst(), buddypojo.getLast(), buddypojo.getEmpCode(), prefs.getPreferencesString(Home.this, "mail_id"));
-                new DownloadMusicfromInternet().execute("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpCode());
+                /*new DownloadMusicfromInternet().execute("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpCode());*/
+
+                ImageLoader loader = ImageLoader.getInstance();
+
+                Log.d("adsasd" , "http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpId());
+
+                loader.displayImage("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpId() , ivProfilePic);
+
                 callShiftDetailApi(buddypojo.getShiftId());
 
                 prefs.setPreferencesString(Home.this, "role", buddypojo.getRole());

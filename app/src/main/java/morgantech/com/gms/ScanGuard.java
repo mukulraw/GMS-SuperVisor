@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
@@ -513,7 +514,11 @@ public class ScanGuard extends AppCompatActivity {
                         ll_lower.setVisibility(View.VISIBLE);
                         Toast.makeText(ScanGuard.this, " Scheduled Resource", Toast.LENGTH_SHORT);
                         ((ImageView) findViewById(R.id.iv_stat)).setImageResource(R.drawable.circle_red);
-                        new DownloadMusicfromInternet().execute("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmp_id());
+                        /*new DownloadMusicfromInternet().execute("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmp_id());*/
+
+                        ImageLoader loader = ImageLoader.getInstance();
+                        loader.displayImage("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmp_id() , iv_profimg);
+
                         ll_lower.setVisibility(View.VISIBLE);
                         textView2.setText("TAG Validated\nUnscheduled Resource");
                         tv_scan.setText("NOT SCHEDULED FOR DUTY");
@@ -534,7 +539,11 @@ public class ScanGuard extends AppCompatActivity {
                         tv_empcode.setText(buddypojo.getEmpCode());
                         hitEventApi();
                         ((ImageView) findViewById(R.id.iv_stat)).setImageResource(R.drawable.circle_green);
-                        new DownloadMusicfromInternet().execute("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource/profilepic?emp_id=" + buddypojo.getEmp_id());
+                        //new DownloadMusicfromInternet().execute("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource/profilepic?emp_id=" + buddypojo.getEmp_id());
+
+                        ImageLoader loader = ImageLoader.getInstance();
+                        loader.displayImage("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpCode() , iv_profimg);
+
                         if (!buddypojo.getTodayAttendance().isEmpty()) {
 
                             ll_inflate.removeAllViews();

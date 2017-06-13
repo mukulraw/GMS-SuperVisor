@@ -30,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
@@ -274,10 +275,10 @@ public class Activity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         int da = dp.getDayOfMonth();
-                        int month = dp.getMonth();
+                        int month = dp.getMonth()+1;
 
                         tvDate.setText(String.valueOf(dp.getDayOfMonth()));
-                        tvMonth.setText(mont.get(dp.getMonth()-1));
+                        tvMonth.setText(mont.get(dp.getMonth()));
 
                         String d = "", m = "";
 
@@ -496,7 +497,14 @@ public class Activity extends AppCompatActivity {
                 tv_name.setText("Hi\n" + buddypojo.getFirst() + " " + buddypojo.getLast());
                 prefs.setPreferencesString(Activity.this, "namedata", buddypojo.getFirst() + " " + buddypojo.getLast());
                 dbHelper.employee_tab(buddypojo.getFirst(), buddypojo.getLast(), buddypojo.getEmpCode(), prefs.getPreferencesString(Activity.this, "mail_id"));
-                new DownloadMusicfromInternet().execute("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpCode());
+                //new DownloadMusicfromInternet().execute("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpCode());
+
+
+                ImageLoader loader = ImageLoader.getInstance();
+                loader.displayImage("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpId() , ivProfilePic);
+
+
+
                 callShiftDetailApi(buddypojo.getShiftId());
 
                 prefs.setPreferencesString(Activity.this, "role", buddypojo.getRole());
@@ -883,7 +891,7 @@ public class Activity extends AppCompatActivity {
 
                                         Log.d("Asd" , String.valueOf(lat) +  String.valueOf(lang));
 
-                                        apiInterface.validate(item.getActivityId(), "1", remarks.getText().toString(), String.valueOf(lat), String.valueOf(lang), new Callback<Integer>() {
+                                        apiInterface.validate(item.getActivityId(), "1", remarks.getText().toString(), String.valueOf(locationFinder.getLatitude()), String.valueOf(locationFinder.getLongitude()), new Callback<Integer>() {
                                             @Override
                                             public void success(Integer integer, Response response) {
 

@@ -214,9 +214,11 @@ public class Qr2 extends AppCompatActivity {
 
 
 
-        apiInterface.validate(actId , value , "" ,  String.valueOf(lat), String.valueOf(lang), new Callback<Integer>() {
+        apiInterface.validate(actId , value , "" ,  String.valueOf(locationFinder.getLatitude()), String.valueOf(locationFinder.getLongitude()), new Callback<Integer>() {
             @Override
             public void success(Integer integer, Response response) {
+
+                progressDialog.dismiss();
 
                 if (integer == 0)
                 {
@@ -239,7 +241,6 @@ public class Qr2 extends AppCompatActivity {
 
                         }
                     });
-
 
                 }
                 else if (integer>0)
@@ -291,7 +292,7 @@ public class Qr2 extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
-
+                progressDialog.dismiss();
             }
         });
 

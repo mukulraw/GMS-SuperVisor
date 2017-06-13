@@ -512,7 +512,7 @@ public class Scan2 extends AppCompatActivity {
 
 
 
-        apiInterface.validate(actId , serial_no , "" , String.valueOf(lat), String.valueOf(lang), new Callback<Integer>() {
+        apiInterface.validate(actId , serial_no , "" , String.valueOf(locationFinder.getLatitude()), String.valueOf(locationFinder.getLongitude()), new Callback<Integer>() {
             @Override
             public void success(Integer integer, Response response) {
 
