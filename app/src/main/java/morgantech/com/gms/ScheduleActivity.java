@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
@@ -30,6 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import morgantech.com.gms.Adapter.ScheduleAdapter;
+import morgantech.com.gms.Pojo.HomePojo;
 import morgantech.com.gms.Pojo.ScheduleParentPojo;
 import morgantech.com.gms.Utils.Constraints;
 import morgantech.com.gms.Utils.Helper;
@@ -106,7 +108,7 @@ public class ScheduleActivity extends AppCompatActivity {
         }
 
         if (Helper.checkInternetConnection(this)) {
-            hitScheduleAPI(formattedDate1);
+            /*hitScheduleAPI(formattedDate1);
             String root = Environment.getExternalStorageDirectory()
                     .toString();
             File myDir = new File("file:///" + root + "/morgan");
@@ -119,6 +121,50 @@ public class ScheduleActivity extends AppCompatActivity {
                     .memoryPolicy(MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE)
                     .into(((ImageView) findViewById(R.id.iv_profile)));
+*/
+
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
+                    .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
+            API_Interface apiInterface = restAdapter.create(API_Interface.class);
+
+
+            apiInterface.getProfile(prefs.getPreferencesString(ScheduleActivity.this, "mail_id"), new Callback<HomePojo>() {
+                @Override
+                public void success(HomePojo buddypojo, Response response) {
+
+
+
+
+
+
+
+
+                    tv_name.setText("Hi\n" + buddypojo.getFirst() + " " + buddypojo.getLast());
+
+
+                /*new DownloadMusicfromInternet().execute("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpCode());*/
+
+                    ImageLoader loader = ImageLoader.getInstance();
+
+                    Log.d("adsasd", "http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpId());
+
+                    loader.displayImage("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpId(), ((ImageView) findViewById(R.id.iv_profile)));
+
+
+
+
+
+
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    progressDialog.dismiss();
+                    //Toast.makeText(Home.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
 
         } else {
             tv_online.setText("Offline");

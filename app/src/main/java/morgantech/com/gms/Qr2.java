@@ -22,6 +22,7 @@ import com.squareup.okhttp.OkHttpClient;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import morgantech.com.gms.DbHelper.DbHelper;
 import morgantech.com.gms.Utils.Constraints;
@@ -204,9 +205,11 @@ public class Qr2 extends AppCompatActivity {
         final String formattedDate = df.format(c.getTime());
         final String formattedTime = df1.format(c.getTime());
 
-        Log.d("asdasdQR" , value);
 
-        progressDialog.show();
+
+        //
+        //
+        // progressDialog.show();
         RestAdapter restAdapter = new RestAdapter.Builder().setConverter(new StringConverter())
                 .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
                 .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
@@ -214,17 +217,19 @@ public class Qr2 extends AppCompatActivity {
 
 
 
-        apiInterface.validate(actId , value , "" ,  String.valueOf(locationFinder.getLatitude()), String.valueOf(locationFinder.getLongitude()), new Callback<Integer>() {
+        apiInterface.validate(actId , value , "" ,  String.valueOf(locationFinder.getLatitude()), String.valueOf(locationFinder.getLongitude()), new Callback<String>() {
             @Override
-            public void success(Integer integer, Response response) {
+            public void success(String integer, Response response) {
 
-                progressDialog.dismiss();
+                Log.d("asdasdQR" , integer);
 
-                if (integer == 0)
+                int a = Integer.parseInt(integer);
+
+                if (Objects.equals(integer, "0"))
                 {
                     finish();
                 }
-                else if (integer == -99999)
+                else if (Objects.equals(integer, "-99999"))
                 {
 
                     Dialog dialog1 = new Dialog(Qr2.this);
@@ -243,7 +248,7 @@ public class Qr2 extends AppCompatActivity {
                     });
 
                 }
-                else if (integer>0)
+                else if (a>0)
                 {
                     Dialog dialog1 = new Dialog(Qr2.this);
                     dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -265,7 +270,7 @@ public class Qr2 extends AppCompatActivity {
                         }
                     });
 
-                }else if (integer<0 && integer > -99999)
+                }else if (a<0 && a > -99999)
                 {
                     Dialog dialog1 = new Dialog(Qr2.this);
                     dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -292,7 +297,9 @@ public class Qr2 extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                progressDialog.dismiss();
+                //progressDialog.dismiss();
+                error.printStackTrace();
+                Log.d("error" , error.toString());
             }
         });
 

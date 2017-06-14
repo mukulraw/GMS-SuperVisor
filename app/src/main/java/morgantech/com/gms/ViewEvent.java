@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
@@ -34,6 +35,7 @@ import java.util.List;
 
 import morgantech.com.gms.Adapter.EventViewAdapter;
 import morgantech.com.gms.DbHelper.DbHelper;
+import morgantech.com.gms.Pojo.HomePojo;
 import morgantech.com.gms.Pojo.ViewEventPojo;
 import morgantech.com.gms.Utils.Constraints;
 import morgantech.com.gms.Utils.Helper;
@@ -55,7 +57,7 @@ public class ViewEvent extends AppCompatActivity {
     ImageView check_offline;
     TextView tv_online, tv_name;
     Prefs prefs;
-
+    ImageView iv_profile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +67,7 @@ public class ViewEvent extends AppCompatActivity {
         progressDialog.setTitle("Please Wait!");
         progressDialog.show();
 
-        ImageView iv_profile = (ImageView) findViewById(R.id.iv_profile);
+        iv_profile = (ImageView) findViewById(R.id.iv_profile);
 
 
         ((LinearLayout) findViewById(R.id.ll_schedule)).setOnClickListener(new View.OnClickListener() {
@@ -140,8 +142,10 @@ public class ViewEvent extends AppCompatActivity {
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
 
-        if (Helper.checkInternetConnection(this)) {
-            String root = Environment.getExternalStorageDirectory()
+        /*if (Helper.checkInternetConnection(this)) {
+
+
+            *//*String root = Environment.getExternalStorageDirectory()
                     .toString();
             File myDir = new File("file:///" + root + "/morgan");
             Uri myUri1 = Uri.parse(myDir + "/image.png");
@@ -152,10 +156,10 @@ public class ViewEvent extends AppCompatActivity {
                     .error(R.drawable.avatar)
                     .memoryPolicy(MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE)
-                    .into(iv_profile);
+                    .into(iv_profile);*//*
         } else {
             iv_profile.setImageResource(R.drawable.avatar);
-        }
+        }*/
 
 
         ((TextView) findViewById(R.id.tv_date)).setText(formattedDate.substring(0, 2));
@@ -202,6 +206,49 @@ public class ViewEvent extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
+                .setClient(new OkClient(new OkHttpClient())).setLogLevel(RestAdapter.LogLevel.FULL).build();
+        API_Interface apiInterface = restAdapter.create(API_Interface.class);
+
+
+        apiInterface.getProfile(prefs.getPreferencesString(ViewEvent.this, "mail_id"), new Callback<HomePojo>() {
+            @Override
+            public void success(HomePojo buddypojo, Response response) {
+
+
+
+
+
+
+
+
+                tv_name.setText("Hi\n" + buddypojo.getFirst() + " " + buddypojo.getLast());
+
+
+                /*new DownloadMusicfromInternet().execute("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpCode());*/
+
+                ImageLoader loader = ImageLoader.getInstance();
+
+                Log.d("adsasd", "http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpId());
+
+                loader.displayImage("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpId(), iv_profile);
+
+
+
+
+
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                progressDialog.dismiss();
+                //Toast.makeText(Home.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
       /*  if (Helper.checkInternetConnection(ViewEvent.this)) {
             check_offline.setImageResource(R.drawable.circle_green);

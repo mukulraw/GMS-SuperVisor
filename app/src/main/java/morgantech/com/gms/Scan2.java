@@ -45,6 +45,7 @@ import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 import morgantech.com.gms.DbHelper.DbHelper;
 import morgantech.com.gms.Pojo.ScanNFCPojo;
@@ -495,7 +496,7 @@ public class Scan2 extends AppCompatActivity {
         iv_profimg.setVisibility(View.INVISIBLE);
 
 
-        progressDialog.show();
+        //progressDialog.show();
 
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
@@ -512,15 +513,17 @@ public class Scan2 extends AppCompatActivity {
 
 
 
-        apiInterface.validate(actId , serial_no , "" , String.valueOf(locationFinder.getLatitude()), String.valueOf(locationFinder.getLongitude()), new Callback<Integer>() {
+        apiInterface.validate(actId , serial_no , "" , String.valueOf(locationFinder.getLatitude()), String.valueOf(locationFinder.getLongitude()), new Callback<String>() {
             @Override
-            public void success(Integer integer, Response response) {
+            public void success(String integer, Response response) {
 
-                if (integer == 0)
+                int a = Integer.parseInt(integer);
+
+                if (Objects.equals(integer, "0"))
                 {
                     finish();
                 }
-                else if (integer == -99999)
+                else if (Objects.equals(integer, "-99999"))
                 {
 
                     Dialog dialog1 = new Dialog(Scan2.this);
@@ -540,7 +543,7 @@ public class Scan2 extends AppCompatActivity {
 
 
                 }
-                else if (integer>0)
+                else if (a>0)
                 {
                     Dialog dialog1 = new Dialog(Scan2.this);
                     dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -562,7 +565,7 @@ public class Scan2 extends AppCompatActivity {
                         }
                     });
 
-                }else if (integer<0 && integer > -99999)
+                }else if (a<0 && a > -99999)
                 {
                     Dialog dialog1 = new Dialog(Scan2.this);
                     dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);

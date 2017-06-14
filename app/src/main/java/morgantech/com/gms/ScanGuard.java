@@ -182,8 +182,7 @@ public class ScanGuard extends AppCompatActivity {
         mAdapter = NfcAdapter.getDefaultAdapter(this);
         if (mAdapter == null) {
             showMessage("error", "You Dont Have NFC in Your Mobile ");
-            finish();
-            return;
+            //finish();
         }
         mPendingIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);

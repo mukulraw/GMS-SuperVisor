@@ -129,7 +129,7 @@ public interface API_Interface {
 
     @GET("/validateactivity")
     void validate(@Query("activity_id") String actiId, @Query("validate_code") String calidateCode, @Query("validate_remarks") String remarks , @Query("latitude") String lat,
-                           @Query("longitude") String lng , Callback<Integer> callback);
+                           @Query("longitude") String lng , Callback<String> callback);
 
     @GET("/submitactivity")
     void submitActivity(@Query("email_id") String emailId, @Query("shift_id") String shiftId,  @Query("latitude") String lat,

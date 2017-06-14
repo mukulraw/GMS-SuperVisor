@@ -105,7 +105,7 @@ public class InfoScreen extends AppCompatActivity {
 
         String text = "<a href='http://www.guardit.ae'>www.guardit.ae</a>";
         textView.setText(Html.fromHtml(text));
-        String text1 = "<a href='www.worldsecurity.ae'>www.worldsecurity.ae</a>";
+        String text1 = "<a href='http://www.worldsecurity.ae'>www.worldsecurity.ae</a>";
         textView1.setText(Html.fromHtml(text1));
 
 

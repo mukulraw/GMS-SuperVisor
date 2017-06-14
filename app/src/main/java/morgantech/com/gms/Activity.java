@@ -691,7 +691,7 @@ public class Activity extends AppCompatActivity {
             prefs = new Prefs();
             prefs.setPreferencesString(context, "login", "App");
 
-            holder.sno.setText(item.getSeqNo());
+            holder.sno.setText(String.valueOf(position + 1));
             holder.activity.setText(item.getLocation());
             holder.type.setText(item.getValidationType());
 
@@ -790,11 +790,13 @@ public class Activity extends AppCompatActivity {
 
                                         if (!remarks.getText().toString().trim().equals(""))
                                         {
-                                            apiInterface.validate(item.getActivityId(), "0", remarks.getText().toString(), String.valueOf(locationFinder.getLatitude()), String.valueOf(locationFinder.getLongitude()), new Callback<Integer>() {
+                                            apiInterface.validate(item.getActivityId(), "0", remarks.getText().toString(), String.valueOf(locationFinder.getLatitude()), String.valueOf(locationFinder.getLongitude()), new Callback<String>() {
                                                 @Override
-                                                public void success(Integer integer, Response response) {
+                                                public void success(String integer, Response response) {
 
-                                                    if (integer == 0) {
+                                                    int a = Integer.parseInt(integer);
+
+                                                    if (Objects.equals(integer, "0")) {
 
                                                         RestAdapter restAdapter = new RestAdapter.Builder()
                                                                 .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
@@ -817,7 +819,7 @@ public class Activity extends AppCompatActivity {
                                                         });
 
                                                         dialog.dismiss();
-                                                    } else if (integer == -99999) {
+                                                    } else if (Objects.equals(integer, "-99999")) {
 
                                                         Dialog dialog1 = new Dialog(Activity.this);
                                                         dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -827,7 +829,7 @@ public class Activity extends AppCompatActivity {
                                                         dialog.dismiss();
 
 
-                                                    } else if (integer > 0) {
+                                                    } else if (a > 0) {
                                                         Dialog dialog1 = new Dialog(Activity.this);
                                                         dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                                         dialog1.setCancelable(true);
@@ -839,7 +841,7 @@ public class Activity extends AppCompatActivity {
                                                         text.setText("Incorrect Sequence : Missed Activity " + String.valueOf(integer));
 
                                                         dialog.dismiss();
-                                                    } else if (integer < 0 && integer > -99999) {
+                                                    } else if (a < 0 && a > -99999) {
                                                         Dialog dialog1 = new Dialog(Activity.this);
                                                         dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                                         dialog1.setCancelable(true);
@@ -891,11 +893,13 @@ public class Activity extends AppCompatActivity {
 
                                         Log.d("Asd" , String.valueOf(lat) +  String.valueOf(lang));
 
-                                        apiInterface.validate(item.getActivityId(), "1", remarks.getText().toString(), String.valueOf(locationFinder.getLatitude()), String.valueOf(locationFinder.getLongitude()), new Callback<Integer>() {
+                                        apiInterface.validate(item.getActivityId(), "1", remarks.getText().toString(), String.valueOf(locationFinder.getLatitude()), String.valueOf(locationFinder.getLongitude()), new Callback<String>() {
                                             @Override
-                                            public void success(Integer integer, Response response) {
+                                            public void success(String integer, Response response) {
 
-                                                if (integer == 0) {
+                                                int a = Integer.parseInt(integer);
+
+                                                if (Objects.equals(integer, "0")) {
 
                                                     RestAdapter restAdapter = new RestAdapter.Builder()
                                                             .setEndpoint("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource")
@@ -918,7 +922,7 @@ public class Activity extends AppCompatActivity {
                                                     });
 
                                                     dialog.dismiss();
-                                                } else if (integer == -99999) {
+                                                } else if (Objects.equals(integer, "-99999")) {
 
                                                     Dialog dialog1 = new Dialog(Activity.this);
                                                     dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -928,7 +932,7 @@ public class Activity extends AppCompatActivity {
                                                     dialog.dismiss();
 
 
-                                                } else if (integer > 0) {
+                                                } else if (a > 0) {
                                                     Dialog dialog1 = new Dialog(Activity.this);
                                                     dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                                     dialog1.setCancelable(true);
@@ -940,7 +944,7 @@ public class Activity extends AppCompatActivity {
                                                     text.setText("Incorrect Sequence : Missed Activity " + String.valueOf(integer));
 
                                                     dialog.dismiss();
-                                                } else if (integer < 0 && integer > -99999) {
+                                                } else if (a < 0 && a > -99999) {
                                                     Dialog dialog1 = new Dialog(Activity.this);
                                                     dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                                     dialog1.setCancelable(true);

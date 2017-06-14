@@ -104,7 +104,6 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
 
-
         c = Calendar.getInstance();
         df1 = new SimpleDateFormat("HH:mm");
         locationFinder = new LocationFinder(this);
@@ -125,9 +124,6 @@ public class Home extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.tv_date)).setText(formattedDate.substring(0, 2));
         ((TextView) findViewById(R.id.tv_month)).setText(formattedDate.substring(3, 6));
-
-
-
 
 
         ((Button) findViewById(R.id.btn_logout)).setOnClickListener(new View.OnClickListener() {
@@ -283,8 +279,7 @@ public class Home extends AppCompatActivity {
                                                                                 }*/
 
 
-
-                                                                                Intent intent = new Intent(Home.this , morgantech.com.gms.Activity.class);
+                                                                                Intent intent = new Intent(Home.this, morgantech.com.gms.Activity.class);
                                                                                 startActivity(intent);
 
                                                                             }
@@ -305,13 +300,6 @@ public class Home extends AppCompatActivity {
 
 
     }
-
-
-
-
-
-
-
 
 
     private void callCameraCode() {
@@ -403,8 +391,7 @@ public class Home extends AppCompatActivity {
                     } else {
                         Log.e("Permission", "Denied");
                     }
-                }catch (ArrayIndexOutOfBoundsException e)
-                {
+                } catch (ArrayIndexOutOfBoundsException e) {
                     e.printStackTrace();
                 }
 
@@ -420,9 +407,7 @@ public class Home extends AppCompatActivity {
                     } else {
                         Log.e("Permission", "Denied");
                     }
-                }
-                catch (ArrayIndexOutOfBoundsException e)
-                {
+                } catch (ArrayIndexOutOfBoundsException e) {
                     e.printStackTrace();
                 }
 
@@ -441,8 +426,7 @@ public class Home extends AppCompatActivity {
                     } else {
 
                     }
-                }catch (ArrayIndexOutOfBoundsException e)
-                {
+                } catch (ArrayIndexOutOfBoundsException e) {
                     e.printStackTrace();
                 }
 
@@ -458,8 +442,7 @@ public class Home extends AppCompatActivity {
                     } else {
                         Log.e("Permission", "Denied");
                     }
-                }catch (ArrayIndexOutOfBoundsException e)
-                {
+                } catch (ArrayIndexOutOfBoundsException e) {
                     e.printStackTrace();
                 }
 
@@ -578,48 +561,57 @@ public class Home extends AppCompatActivity {
                 Bundle extras = data.getExtras();
 
                 if (extras != null) {
-                    Bitmap photo = extras.getParcelable("data");
 
-                    String root = Environment.getExternalStorageDirectory()
-                            .toString();
-                    File myDir = new File(root + "/morgan_images");
-                    if (myDir.exists()) {
-                        myDir.delete();
-                    }
-                    myDir.mkdirs();
-                    Random generator = new Random();
-                    int n = 10000;
-                    n = generator.nextInt(n);
-                    String image_name = "Image-" + n + ".jpg";
-                    File file = new File(myDir, image_name);
-                    if (file.exists())
-                        file.delete();
-                    photo = (Bitmap) data.getExtras().get("data");
-                    Bitmap scaledBitmap = ScalingUtilities.createScaledBitmap(
-                            photo, 600, 600, ScalingUtilities.ScalingLogic.CROP);
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100,
-                            stream);
                     try {
-                        file.createNewFile();
-                        FileOutputStream fo = new FileOutputStream(file);
-                        //5
-                        fo.write(stream.toByteArray());
-                        fo.close();
-                    } catch (IOException e) {
+                        Bitmap photo;
+                        extras.getParcelable("data");
 
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        String root = Environment.getExternalStorageDirectory()
+                                .toString();
+                        File myDir = new File(root + "/GuardIT");
+                        if (myDir.exists()) {
+                            myDir.delete();
+                        }
+                        myDir.mkdirs();
+                        Random generator = new Random();
+                        int n = 10000;
+                        n = generator.nextInt(n);
+                        String image_name = "Image-" + n + ".jpg";
+                        File file = new File(myDir, image_name);
+                        if (file.exists())
+                            file.delete();
+                        photo = (Bitmap) data.getExtras().get("data");
+                        Bitmap scaledBitmap = ScalingUtilities.createScaledBitmap(
+                                photo, 600, 600, ScalingUtilities.ScalingLogic.CROP);
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100,
+                                stream);
+                        try {
+                            file.createNewFile();
+                            FileOutputStream fo = new FileOutputStream(file);
+                            //5
+                            fo.write(stream.toByteArray());
+                            fo.close();
+                        } catch (IOException e) {
+
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+
+                        }
+                        userImage = new BitmapDrawable(getResources(), scaledBitmap);
+                        //ivProfilePic.setImageDrawable(userImage);
+                        // hitImageAPI(file);
+                        Bitmap scaledBitmapBk = ScalingUtilities.createScaledBitmap(
+                                photo, 900, 900, ScalingUtilities.ScalingLogic.CROP);
+                        ByteArrayOutputStream streamBk = new ByteArrayOutputStream();
+                        scaledBitmapBk.compress(Bitmap.CompressFormat.JPEG, 100,
+                                streamBk);
+                    }catch (Exception e)
+                    {
 
                     }
-                    userImage = new BitmapDrawable(getResources(), scaledBitmap);
-                    //ivProfilePic.setImageDrawable(userImage);
-                    // hitImageAPI(file);
-                    Bitmap scaledBitmapBk = ScalingUtilities.createScaledBitmap(
-                            photo, 900, 900, ScalingUtilities.ScalingLogic.CROP);
-                    ByteArrayOutputStream streamBk = new ByteArrayOutputStream();
-                    scaledBitmapBk.compress(Bitmap.CompressFormat.JPEG, 100,
-                            streamBk);
+
+
 
                 }
             }
@@ -800,7 +792,6 @@ public class Home extends AppCompatActivity {
                 prefs.setPreferencesString(Home.this, "emp_code", buddypojo.getEmpId());
 
 
-
                 prefs.setPreferencesString(Home.this, "shift_id", buddypojo.getShiftId());
                 if (prefs.getPreferencesString(Home.this, "login").equals("login")) {
                     hitEventApi();
@@ -815,9 +806,9 @@ public class Home extends AppCompatActivity {
 
                 ImageLoader loader = ImageLoader.getInstance();
 
-                Log.d("adsasd" , "http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpId());
+                Log.d("adsasd", "http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpId());
 
-                loader.displayImage("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpId() , ivProfilePic);
+                loader.displayImage("http://" + Constraints.Base_Address + ":5000/GuardIT-RWS/rest/myresource" + "/profilepic?emp_id=" + buddypojo.getEmpId(), ivProfilePic);
 
                 callShiftDetailApi(buddypojo.getShiftId());
 
